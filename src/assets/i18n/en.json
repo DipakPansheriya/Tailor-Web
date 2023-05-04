@@ -1,0 +1,116 @@
+{
+    "LANGUAGE.ENGLISH": "English",
+    "LANGUAGE.GUJRATI": "Gujarati",
+    "MENUBAR": {
+        "DASHBOARD": "Dashboard",
+        "CUSTOMER_LIST": "Customers",
+        "ORDERS": "Orders",
+        "Logout": "LogOut",
+        "PATTERN": "Pattern Master"
+    },
+    "ORDER": {
+        "ADD_ORDER_BTN": "+ Add New Order",
+        "ORDERLIST": "Order List",
+        "ORDER_LIST": {
+            "SR_NO":"Sr",
+            "ORDER_BTN": "Add New Order",
+            "EDIT_BTN": "Update Order",
+            "NAME": "Name",
+            "MOBILE_NO": "Mobile No",
+            "QUANTITY": "Quantity",
+            "TYPE": "Type",
+            "DELIVERY_DATE": "Delivery Date",
+            "STATUS": "Status",
+            "ACTION": "Action",
+            "BILL_NO": "Bill No"
+        },
+        "ADD_ORDER": {
+            "JODI": "Jodi",
+            "PENT": "Pent",
+            "SHIRT": "Shirt",
+            "CUSTOMER_NAME": "Name",
+            "CUSTOMER_MOBILE": "Mobile No.",
+            "GARMENT_TYPE" : "Garment type",
+            "SEARCH_CUSTOMER": "Search Using Mobile No",
+            "SEARCH": "Search",
+            "PENT_PATTERN_TYPE": "Select Pent Pattern",
+            "SHIRT_PATTERN_TYPE": "Select Shirt Pattern",
+            "ADD_NEW_PATTERN": "Add Pattern",
+            "PATTERN_ADDITIONAL": "Additional Pattern Details",
+            "DESCRIPTION": "Additional Description(If Any)",
+            "INVOICE": "Invoice",
+            "SUBMIT": "Submit",
+            "EXTRA_COST": "Total Additional Cost",
+            "DELIVERY_DATE": "Delivery Date",
+            "QUANTITY" : "Quantity",
+            "PENT_MEASUREMENT" : {
+                "L": "L.",
+                "K": "K.",
+                "SEE": "S.",
+                "MO": "MO.",
+                "JA": "JA.",
+                "JO": "JO.",
+                "GO": "GO."
+            },
+            "SHIRT_MEASUREMENT" : {
+                "L": "L.",
+                "BA": "BA.",
+                "CHA": "CHA.",
+                "SHO": "SHO.",
+                "PREY": "PE.",
+                "KO": "KO.",
+                "K": "K.",
+                "KH": "KH.",
+                "SHIRT_BUSHIRT": "Bushirt",
+                "SHIRT_OPEN": "Open",
+                "SHIRT_TYPE": "Shirt Type"
+            },
+            "JODI_MEASUREMENT" : {
+                "L": "L.",
+                "K": "K.",
+                "SEE": "S.",
+                "MO": "MO.",
+                "JA": "JA.",
+                "JO": "JO.",
+                "GO": "GO.",
+                "BA": "BA.",
+                "CHA": "CHA.",
+                "SHO": "SHO.",
+                "PREY": "PE.",
+                "KO": "KO.",
+                "KH": "KH.",
+                "SR_NO": "Sr",
+                "PATTERN_NAME": "Pattern Name",
+                "PRICE": "Price"
+            }
+        }
+    },
+    "PATTERN_MASTER": {
+        "ADD_NEW": "Add New Pattern",
+        "EDIT": "Update Pattern",
+        "SHIRT": "Shirt",
+        "PENT": "Pent",
+        "ALL": "All",
+        "PATTERN_NAME" : "Pattern Name",
+        "PRICE" : "Price",
+        "CATEGORY" : "Category",
+        "SUBMIT" : "Submit"
+    },
+    "MSGTITLE": {
+        "SUCCESS": "success",
+        "INFO": "Info",
+        "WARNING": "Waning",
+        "ERROR": "error"
+    },
+    "COMMON_MESSAGE": {
+        "loginFdetail": "Login Details Invalid..",
+        "loginSdetail": "Login Successfull...",
+        "SubmitData": "Record Added Successfully",
+        "Filledrequired": "Please Filled All Mandatory Fields..",
+        "UpdateData": "Record successfully updated",
+        "DeletedData": "Record Deleted Successfully",
+        "DeleteHeader": "Delete Record",
+        "DeleteAlertL": "Are you sure you want to permanently delete this record ?",
+        "CustomerNotFound": "This customer is not registered, Please register this customer as a new one first.."
+    }
+}

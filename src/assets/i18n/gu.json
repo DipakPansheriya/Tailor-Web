@@ -1,0 +1,119 @@
+{
+	"LANGUAGE.ENGLISH": "અંગ્રેજી",
+	"LANGUAGE.GUJRATI": "ગુજરાતી",
+	"MENUBAR": {
+		"DASHBOARD": "ડેશબોર્ડ",
+		"CUSTOMER_LIST": "ગ્રાહકો",
+		"Settings": "સેટિંગ્સ",
+		"ORDERS": "ઓર્ડર",
+		"Logout": "લૉગ આઉટ",
+		"PATTERN": "પેટર્ન માસ્ટર"
+	},
+	"ORDER": {
+		"NO_RECDE_FOUND": "કોઈ રેકોડૅ મળ્યો નથી",
+		"ADD_ORDER_BTN": "+ નવો ઓર્ડર ઉમેરો",
+		"ORDERLIST": "ઓર્ડરની યાદી",
+		"ORDER_LIST": {
+			"SR_NO": "ક્રમ",
+			"ORDER_BTN": "નવો ઓર્ડર ઉમેરો",
+			"EDIT_BTN": "ઓર્ડર માં સુધારો કરો",
+			"NAME": "નામ",
+			"MOBILE_NO": "મોબાઈલ નંબર",
+			"QUANTITY": "નંગ",
+			"PRICE": "ભાવ",
+			"DELIVERY_DATE": "ડિલિવરીની તારીખ",
+			"ACTION": "એક્શન",
+			"TYPE": "પ્રકાર",
+			"STATUS": "સ્ટેટસ",
+			"BILL_NO": "બીલ નં"
+		},
+		"ADD_ORDER": {
+			"JODI": "જોડી",
+			"PENT": "પેન્ટ",
+			"SHIRT": "શર્ટ",
+			"CUSTOMER_NAME": "નામ",
+			"CUSTOMER_MOBILE": "મોબાઈલ નંબર",
+			"GARMENT_TYPE": "કપડાનો પ્રકાર",
+			"SEARCH_CUSTOMER": "મોબાઈલ નંબરની મદદથી શોધો",
+			"SEARCH": "શોધ કરો",
+			"PENT_PATTERN_TYPE": "પેન્ટની પેટર્ન પસંદ કરો",
+			"SHIRT_PATTERN_TYPE": "શર્ટની પેટર્ન પસંદ કરો",
+			"ADD_NEW_PATTERN": "નવી પેટર્ન",
+			"INVOICE": "બીલ",
+			"PATTERN_ADDITIONAL": "વધારાની પેટર્નની વિગતો",
+			"DESCRIPTION": "વધારાનું વર્ણન (જો કોઈ હોય તો)",
+			"SUBMIT": "સબમિટ કરો",
+			"EXTRA_COST": "કુલ વધારાનો ખર્ચ",
+			"DELIVERY_DATE": "ડિલિવરી તારીખ",
+			"QUANTITY": "નંગ",
+			"PENT_MEASUREMENT": {
+				"L": "લં.",
+				"K": "ક.",
+				"SEE": "સિ.",
+				"MO": "મો.",
+				"JA": "જાં.",
+				"JO": "જો.",
+				"GO": "ગો."
+			},
+			"SHIRT_MEASUREMENT": {
+				"L": "લં.",
+				"BA": "બા.",
+				"CHA": "છા.",
+				"SHO": "શો.",
+				"PREY": "પે.",
+				"KO": "કો.",
+				"K": "ક.",
+				"KH": "ખ.",
+				"SHIRT_BUSHIRT": "બુશર્ટ",
+				"SHIRT_OPEN": "બુશર્ટ",
+				"SHIRT_TYPE": "બુશર્ટ"
+			},
+			"JODI_MEASUREMENT": {
+				"L": "લં.",
+				"K": "ક.",
+				"SEE": "સિ.",
+				"MO": "મો.",
+				"JA": "જાં.",
+				"JO": "જો.",
+				"GO": "ગો.",
+				"BA": "બા.",
+				"CHA": "છા.",
+				"SHO": "શો.",
+				"PREY": "પે.",
+				"KO": "કો.",
+				"KH": "ખ.",
+				"SR_NO" : "ક્રમ",
+				"PATTERN_NAME" : "પેટર્નનું નામ",
+				"PRICE" : "ભાવ"
+			}
+		}
+	},
+	"PATTERN_MASTER": {
+		"ADD_NEW": "નવી પેટર્ન ઉમેરો",
+		"EDIT": "Update Pattern",
+		"SHIRT": "શર્ટ",
+		"PENT": "પેન્ટ",
+		"ALL": "બધા",
+		"PATTERN_NAME": "પેટર્નનું નામ",
+		"PRICE": "ભાવ",
+		"CATEGORY": "શ્રેણી",
+		"SUBMIT": "સબમિટ કરો"
+	},
+	"COMMON_MESSAGE": {
+		"loginFdetail": "લૉગિન વિગતો અમાન્ય..",
+		"loginSdetail": "લૉગિન સફળ...",
+		"SubmitData": "રેકોર્ડ સફળતાપૂર્વક ઉમેરવામાં આવ્યો..",
+		"Filledrequired": "કૃપા કરીને તમામ ફરજિયાત વિગતો ભરો..",
+		"UpdateData": "રેકોર્ડ સફળતાપૂર્વક અપડેટ થયો.. ",
+		"DeletedData": "ડેટા સફળતાપૂર્વક કાઢી નાખ્યો..",
+		"DeleteHeader": "રેકોર્ડ કાઢી નાખો",
+		"DeleteAlertL": "શું તમે ખરેખર આ રેકોર્ડ કાયમ માટે કાઢી નાખવા માંગો છો?",
+		"CustomerNotFound": "આ ગ્રાહક નોંધાયેલ નથી, કૃપા કરીને પહેલા આ ગ્રાહકને નવા તરીકે નોંધણી કરો"
+	},
+	"MSGTITLE": {
+		"SUCCESS": "સફળતા",
+		"INFO": "માહિતી",
+		"WARNING": "ચેતવણી",
+		"ERROR": "ભૂલ"
+	}
+}
