@@ -18,11 +18,12 @@
 
 .edit {
     background-color: #50C2C9;
-    width: 16%;
-    border-radius: 212px;
+    border-radius: 50%;
     padding: 5px;
     text-align: center;
     cursor: pointer;
+    width: 30%;
+    color: aliceblue;
 }
 
 .searchBtn {
@@ -189,16 +190,18 @@
 }
 
 .sholderMain{
-    width: 400px;
     display: flex;
-    .sholInput{
-        width: 100px;
+    align-items: center;
+    width: 71%;
+
+    .sholInput {
+            margin-right: 10px;
+    }
+    
+    .peInput {
         margin-right: 10px;
     }
-    .peInput{
-        width: 90px;
-        margin-right: 10px;
-    }
+
 
     .searchBarReadOnly {
         background-color: #cacdd1;
@@ -206,20 +209,28 @@
         font-weight: 500;
     }
 
-        input:read-only {
-            background-color: yellow;
-        }
+    input:read-only {
+        background-color: yellow;
+    }
+}
+
+.jodisholderMain {
+    display: flex;
+    align-items: center;
+
+    .sholInput {
+        margin-right: 10px;
+        width: 24.3%;
+            }
+        
+    .peInput {
+        margin-right: 10px;
+    }
 }
 
 .modal-dialog{
     max-width: 80%;
 }
-
-
-
-
-
-
 
 .card{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -229,3 +240,11 @@
     display: flex;
     flex-direction: column;
 }
+
+ ::ng-deep .p-inputtext:enabled:focus{
+    box-shadow: none;
+ }
+
+ .tHead{
+   background:  #e0e0e0
+ }

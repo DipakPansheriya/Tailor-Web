@@ -26,6 +26,7 @@
     "firebase": "^9.20.0",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.4",
+    "ngx-cookie-service": "^16.0.0",
     "primeicons": "^5.0.0",
     "primeng": "^13.3.0",
     "rxjs": "~7.5.0",

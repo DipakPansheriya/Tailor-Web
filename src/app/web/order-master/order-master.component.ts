@@ -1,10 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { Table } from 'primeng/table';
-import { OrderJodiMaster, OrderMaster, OrderPentMaster, OrderShirtMaster } from 'src/app/interface/AuthResponse';
+import { OrderMaster } from 'src/app/interface/AuthResponse';
 import { CustomMessageService } from 'src/app/service/custom-message/custom-message.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { msgType } from 'src/assets/Constant/message-constant';
@@ -14,16 +13,14 @@ import { msgType } from 'src/assets/Constant/message-constant';
   templateUrl: './order-master.component.html',
   styleUrls: ['./order-master.component.scss']
 })
+  
 export class OrderMasterComponent implements OnInit {
-  first = 0;
-  rows = 5;
-  isVisible = false
+
   orderForm!: FormGroup;
   pentForm!: FormGroup;
   shirtForm!: FormGroup;
   jodiForm!: FormGroup;
   searchCustomer: any;
-  // existingCustomer: any;
   fullName: any;
   mobileNo: any;
   customerId: any;
@@ -57,46 +54,24 @@ export class OrderMasterComponent implements OnInit {
     private fireBaseService: FirebaseService,
     private messageService: CustomMessageService,
     private translateService: TranslateService,
-    private datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
+    this.buildJodiForm();
     this.getAllCustomers();
     this.getAllPatterns()
-    // this.buildPentForm();
-    // this.buildShirtForm();
-    this.buildJodiForm();
     this.getAllOrders();
-  }
-
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
-  }
-
-  isLastPage(): boolean {
-    return this.customersList ? this.first === this.customersList.length - this.rows : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.customersList ? this.first === 0 : true;
   }
 
   clear(table: Table) {
     table.clear();
+    const element :any = document.getElementById('orderSearch');
+    element.value = ''
   }
 
   editOrder(value: any): void {
     this.orderData = value
     this.orderId = value.id
-    // this.isVisible = true;
     this.latestBillNo = value.billNumber
     this.headingName = this.translateService.instant('ORDER.ORDER_LIST.EDIT_BTN');
     this.isEdit = true;
@@ -143,7 +118,6 @@ export class OrderMasterComponent implements OnInit {
   }
 
   addOrder() {
-    // this.isVisible = true;
     this.isEdit = false;
     this.searchCustomer = '';
     this.customerId = ''
@@ -211,10 +185,12 @@ export class OrderMasterComponent implements OnInit {
   }
 
   jodiSubmit(): void {
+    
     this.validateAllFormFields(this.jodiForm)
     if (this.jodiForm.invalid) {
       return this.messageService.openCustomMessage(msgType.ERROR, this.translateService.instant('COMMON_MESSAGE.Filledrequired'))
     }
+
     const payload: OrderMaster = {
       id: this.orderId ? this.orderId : '',
       garmentType: this.jodiForm.value.garmentType,
@@ -266,14 +242,12 @@ export class OrderMasterComponent implements OnInit {
     if (!this.orderId) {
       this.fireBaseService.addOrderMaster(payload).then(res => {
         if (res) {
-          this.isVisible = false;
           this.jodiForm.reset();
           this.messageService.openCustomMessage(msgType.SUCCESS, this.translateService.instant('COMMON_MESSAGE.SubmitData'));
         }
       })
     } else {
       this.fireBaseService.updateOrderMaster(this.orderId, payload).then((res: any) => {
-        this.isVisible = false;
         this.jodiForm.reset();
         this.messageService.openCustomMessage(msgType.SUCCESS, this.translateService.instant('COMMON_MESSAGE.UpdateData'));
       })
@@ -323,7 +297,6 @@ export class OrderMasterComponent implements OnInit {
   }
 
   search(): void {
-    debugger
     const existingCustomer = this.customersList.find((id: any) => id.mobileNo == this.searchCustomer)
     if (existingCustomer) {
       this.fullName = existingCustomer.firstName + ' ' + existingCustomer.lastName;
