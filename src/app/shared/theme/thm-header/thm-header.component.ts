@@ -1,6 +1,7 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-thm-header',
@@ -27,7 +28,7 @@ export class ThmHeaderComponent implements OnInit {
     // private firebaseService: FirebaseService,
     private router: Router,
     private translate: TranslateService,
-    // private authService: AuthService
+    private authService: AuthService
   ) { 
     translate.setDefaultLang('en')
     
@@ -92,7 +93,8 @@ export class ThmHeaderComponent implements OnInit {
   // }
 
   logOut(){
-    // this.authService.signOut()
+    this.authService.signOut();
+    localStorage.clear()
   }
   changepassword(){
     this.router.navigate(['/changepassword'])

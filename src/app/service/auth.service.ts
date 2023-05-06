@@ -47,9 +47,8 @@ export class AuthService {
   signOut(){
     this.user.next(null!)
     this.router.navigate(['/login']);
-    sessionStorage.removeItem('UserData')
+    localStorage.removeItem('UserData')
     localStorage.clear()
-  
   }
 
   // autoSignOut(expirationDuration:any){
@@ -72,12 +71,12 @@ export class AuthService {
   //   }
   // }
 
-  private authenticatedUser(email:any,userId:any,token:any,expiredIn:any){
+  private authenticatedUser(email: any, userId: any, token: any, expiredIn: any) {
     const expirationDate = new Date(new Date().getTime() + expiredIn*100);
     const user =  new User(email,userId,token,expirationDate)
     // this.autoSignOut(expiredIn*1000)    
     this.user.next(user);
-    sessionStorage.setItem('UserData',JSON.stringify(user) )
+    localStorage.setItem('UserData',JSON.stringify(user) )
   } 
 
   forgotPassword(email:any){
