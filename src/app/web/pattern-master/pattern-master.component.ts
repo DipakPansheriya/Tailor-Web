@@ -56,9 +56,11 @@ export class PatternMasterComponent implements OnInit {
 
   addNewPattern() : void {
     this.isPatternVisible = true;
+    this.headingName = this.translate.instant('PATTERN_MASTER.ADD_NEW')
     this.patternName = ''
     this.patternPrice = ''
     this.patternCategory = ''
+    this.patternId = ''
   }
 
   patternSubmit(): void {
@@ -90,7 +92,7 @@ export class PatternMasterComponent implements OnInit {
 
 
   editPattern(value: any): void {
-    this.headingName = 'Update Pattern';
+    this.headingName = this.translate.instant('PATTERN_MASTER.EDIT')
     this.isPatternVisible = true;
     this.patternId = value.id
     this.patternName = value.patternName
