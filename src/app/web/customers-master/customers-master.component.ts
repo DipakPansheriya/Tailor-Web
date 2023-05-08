@@ -85,7 +85,7 @@ export class CustomersMasterComponent implements OnInit {
   }
   
   getAllCustomers(): void {
-    this.fireBaseService.getAllData().subscribe((res => {
+    this.fireBaseService.getAllCustomers().subscribe((res => {
       if (res) {
         this.customersList = res;
       }

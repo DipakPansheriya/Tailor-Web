@@ -59,7 +59,7 @@
             </div>
             <div class="col-md-4">
                 <label>Mobile No.</label><span class="required">*</span>
-                <input pInputText type="text" class="form-control" formControlName="mobileNo" (keydown)="mobileInputRestriction($event)" />
+                <input pInputText type="text" class="form-control" formControlName="mobileNo" (keydown)="mobileInputRestriction($event)" (keyup.enter)="onSubmit()" />
             </div>
         </div>
         <div class="row submitBtn_main">

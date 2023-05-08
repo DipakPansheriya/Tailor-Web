@@ -8,6 +8,10 @@
         "Logout": "LogOut",
         "PATTERN": "Pattern Master"
     },
+    "DASHBOARD" : {
+        "TOTAL_ORDERS" : "Total Orders",
+        "TOTAL_CUSTOMERS" : "Total Customers"
+    },
     "ORDER": {
         "ADD_ORDER_BTN": "+ Add New Order",
         "ORDERLIST": "Order List",

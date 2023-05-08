@@ -17,7 +17,7 @@ export class FirebaseService {
     return addDoc(collection(this.fService, 'CustomerList'), data)
   }
 
-  getAllData() {
+  getAllCustomers() {
     let dataRef = collection(this.fService, 'CustomerList')
     return collectionData(dataRef, { idField: 'id' })
   }

@@ -72,7 +72,6 @@ export class OrderMasterComponent implements OnInit {
   editOrder(value: any): void {
     this.orderData = value
     this.orderId = value.id
-    this.latestBillNo = value.billNumber
     this.headingName = this.translateService.instant('ORDER.ORDER_LIST.EDIT_BTN');
     this.isEdit = true;
     this.setOrderData(value)
@@ -126,6 +125,7 @@ export class OrderMasterComponent implements OnInit {
     this.headingName = this.translateService.instant('ORDER.ORDER_LIST.ORDER_BTN');
     this.jodiForm.reset();
     this.jodiForm.controls['garmentType'].setValue('Jodi');
+    this.orderId = '';
   }
 
 
@@ -167,7 +167,7 @@ export class OrderMasterComponent implements OnInit {
   }
 
   getAllCustomers(): void {
-    this.fireBaseService.getAllData().subscribe((res => {
+    this.fireBaseService.getAllCustomers().subscribe((res => {
       if (res) {
         this.customersList = res;
       }
@@ -198,7 +198,7 @@ export class OrderMasterComponent implements OnInit {
       customerMobileNo: this.mobileNo,
       customerName: this.fullName,
       status: 'Pending',
-      billNumber: Number(this.latestBillNo),
+      billNumber: this.orderId ? this.orderData.billNumber : Number(this.latestBillNo),
       orderDate: moment().format('YYYY-MM-DD'),
       deliveryDate: moment(this.jodiForm.value?.deliveryDate).format('YYYY-MM-DD'),
       quantity: this.jodiForm.value.jodiQuantity,

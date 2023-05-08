@@ -9,6 +9,10 @@
 		"Logout": "લૉગ આઉટ",
 		"PATTERN": "પેટર્ન માસ્ટર"
 	},
+	"DASHBOARD": {
+		"TOTAL_ORDERS": "કુલ ઓર્ડર",
+		"TOTAL_CUSTOMERS": "કુલ ગ્રાહકો"
+	},
 	"ORDER": {
 		"NO_RECDE_FOUND": "કોઈ રેકોડૅ મળ્યો નથી",
 		"ADD_ORDER_BTN": "+ નવો ઓર્ડર ઉમેરો",
