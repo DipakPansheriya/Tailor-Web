@@ -16,9 +16,6 @@ import { msgType } from 'src/assets/Constant/message-constant';
   
 export class OrderMasterComponent implements OnInit {
 
-  orderForm!: FormGroup;
-  pentForm!: FormGroup;
-  shirtForm!: FormGroup;
   jodiForm!: FormGroup;
   searchCustomer: any;
   fullName: any;
@@ -42,12 +39,15 @@ export class OrderMasterComponent implements OnInit {
   shirtPattern: any;
   shirtPatternPrice: any;
   validMobilePattern: RegExp = new RegExp(/^\d{0,10}$/g);
+  measurementPattern: RegExp = new RegExp(/^[0-9|.\/]+$/);
+  qtyPattern: RegExp = new RegExp(/^[0-9|]+$/);
   allOrderList: any = [];
   latestBillNo: any;
   isEdit = false;
   headingName = this.translateService.instant('ORDER.ORDER_LIST.ORDER_BTN');
   orderData: any;
-  orderId : any;
+  orderId: any;
+  currentDate = new Date()
 
   constructor(
     private fb: FormBuilder,
@@ -82,9 +82,9 @@ export class OrderMasterComponent implements OnInit {
     this.fullName = value.customerName
     this.mobileNo = value.customerMobileNo
     this.customerId = value.customerId
-    this.jodiForm.controls['jodiQuantity'].setValue(value?.quantity)
+    this.jodiForm.controls['jodiQuantity'].setValue(Number(value?.quantity))
     this.jodiForm.controls['garmentType'].setValue(value?.garmentType)
-    this.jodiForm.controls['pentQuantity'].setValue(value?.pentDetails?.quantity)
+    this.jodiForm.controls['pentQuantity'].setValue(Number(value?.pentDetails?.quantity))
     this.jodiForm.controls['pentL'].setValue(value?.pentDetails?.pentL)
     this.jodiForm.controls['pentK'].setValue(value?.pentDetails?.pentK)
     this.jodiForm.controls['shi'].setValue(value?.pentDetails?.shi)
@@ -95,7 +95,7 @@ export class OrderMasterComponent implements OnInit {
     this.jodiForm.controls['pentPatterns'].setValue(value?.pentDetails?.pentPatterns)
     this.jodiForm.controls['pentAdditionalDesc'].setValue(value?.pentDetails?.pentAdditionalDesc)
     this.jodiForm.controls['pentTotalExtraCost'].setValue(value?.pentDetails?.pentTotalExtraCost)
-    this.jodiForm.controls['shirtQuantity'].setValue(value?.shirtDetails?.quantity)
+    this.jodiForm.controls['shirtQuantity'].setValue(Number(value?.shirtDetails?.quantity))
     this.jodiForm.controls['shirtL'].setValue(value?.shirtDetails?.shirtL)
     this.jodiForm.controls['ba'].setValue(value?.shirtDetails?.ba)
     this.jodiForm.controls['cha'].setValue(value?.shirtDetails?.cha)
@@ -201,7 +201,7 @@ export class OrderMasterComponent implements OnInit {
       billNumber: this.orderId ? this.orderData.billNumber : Number(this.latestBillNo),
       orderDate: moment().format('YYYY-MM-DD'),
       deliveryDate: moment(this.jodiForm.value?.deliveryDate).format('YYYY-MM-DD'),
-      quantity: this.jodiForm.value.jodiQuantity,
+      quantity: Number(this.jodiForm.value.jodiQuantity),
 
       pentDetails: {
         pentL: this.jodiForm.value.pentL,
@@ -256,25 +256,25 @@ export class OrderMasterComponent implements OnInit {
   }
 
   
-  pentPatternSelection(): void {
-    if (this.pentForm.value?.patterns?.length > 0) {
-      const data = this.pentForm.value.patterns.map((id: any) => Number(id.patternPrice))
-      const finalAmount = data?.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
-      this.pentForm.controls['totalExtraCost'].setValue(finalAmount)
-    } else {
-      this.pentForm.controls['totalExtraCost'].setValue(0)
-    }
-  }
+  // pentPatternSelection(): void {
+  //   if (this.pentForm.value?.patterns?.length > 0) {
+  //     const data = this.pentForm.value.patterns.map((id: any) => Number(id.patternPrice))
+  //     const finalAmount = data?.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
+  //     this.pentForm.controls['totalExtraCost'].setValue(finalAmount)
+  //   } else {
+  //     this.pentForm.controls['totalExtraCost'].setValue(0)
+  //   }
+  // }
 
-  shirtPatternSelection(): void {
-    if (this.shirtForm.value?.patterns?.length > 0) {
-      const data = this.shirtForm.value.patterns.map((id: any) => Number(id.patternPrice))
-      const finalAmount = data?.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
-      this.shirtForm.controls['totalExtraCost'].setValue(finalAmount)
-    } else {
-      this.shirtForm.controls['totalExtraCost'].setValue(0)
-    }
-  }
+  // shirtPatternSelection(): void {
+  //   if (this.shirtForm.value?.patterns?.length > 0) {
+  //     const data = this.shirtForm.value.patterns.map((id: any) => Number(id.patternPrice))
+  //     const finalAmount = data?.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
+  //     this.shirtForm.controls['totalExtraCost'].setValue(finalAmount)
+  //   } else {
+  //     this.shirtForm.controls['totalExtraCost'].setValue(0)
+  //   }
+  // }
 
   jodiPatternSelection(type: any): void {
     if (type == 'pent') {
@@ -308,7 +308,7 @@ export class OrderMasterComponent implements OnInit {
     let customerData = this.allOrderList.find((id: any) => id.billNumber === Math.max(...this.allOrderList.filter((id: any) => id.customerId === existingCustomer.id).map((id: any) => id.billNumber)))
     if (customerData) {
       this.jodiForm.controls['garmentType'].setValue(customerData?.garmentType)
-        this.jodiForm.controls['jodiQuantity'].setValue(customerData?.quantity)
+        this.jodiForm.controls['jodiQuantity'].setValue(Number(customerData?.quantity))
         this.jodiForm.controls['pentL'].setValue(customerData?.pentDetails?.pentL)
         this.jodiForm.controls['pentK'].setValue(customerData?.pentDetails?.pentK)
         this.jodiForm.controls['shi'].setValue(customerData?.pentDetails?.shi)
@@ -319,7 +319,7 @@ export class OrderMasterComponent implements OnInit {
         this.jodiForm.controls['pentPatterns'].setValue(customerData?.pentDetails?.pentPatterns)
         this.jodiForm.controls['pentAdditionalDesc'].setValue(customerData?.pentDetails?.pentAdditionalDesc)
         this.jodiForm.controls['pentTotalExtraCost'].setValue(customerData?.pentDetails?.pentTotalExtraCost)
-        this.jodiForm.controls['pentQuantity'].setValue(customerData?.pentDetails?.quantity)
+        this.jodiForm.controls['pentQuantity'].setValue(Number(customerData?.pentDetails?.quantity))
       
         this.jodiForm.controls['shirtL'].setValue(customerData?.shirtDetails?.shirtL)
         this.jodiForm.controls['ba'].setValue(customerData?.shirtDetails?.ba)
@@ -339,7 +339,7 @@ export class OrderMasterComponent implements OnInit {
         this.jodiForm.controls['shirtTotalExtraCost'].setValue(customerData?.shirtDetails?.shirtTotalExtraCost)
         this.jodiForm.controls['deliveryDate'].setValue(new Date(customerData?.deliveryDate))
         this.jodiForm.controls['shirtType'].setValue(customerData?.shirtDetails?.shirtType)
-        this.jodiForm.controls['shirtQuantity'].setValue(customerData?.shirtDetails?.quantity)
+        this.jodiForm.controls['shirtQuantity'].setValue(Number(customerData?.shirtDetails?.quantity))
     }
   }
 
@@ -359,6 +359,14 @@ export class OrderMasterComponent implements OnInit {
       const control: any = formGroup.get(field);
       control.markAsTouched({ onlySelf: true });
     });
+  }
+
+  inputRestriction(event: any, type? : any ): any {
+    if (type && type === 'qty') {
+      this.messageService.inputRestriction(event, this.qtyPattern)
+    } else {
+      this.messageService.inputRestriction(event, this.measurementPattern)
+    }
   }
 
 }
