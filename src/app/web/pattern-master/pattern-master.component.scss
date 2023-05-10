@@ -1,0 +1,25 @@
+.submit {
+    width: 111px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 10px;
+    background-color: #2362c9;
+}
+.radioBtn {
+    margin-left: 20px;
+}
+
+.radioLable {
+    margin-left: 7px;
+}
+
+.submitBtn{
+    text-align: center;
+}
+
+.disabled{
+    cursor: not-allowed;
+    opacity: 0.6;
+}

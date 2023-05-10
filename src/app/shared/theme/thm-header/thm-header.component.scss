@@ -1,0 +1,42 @@
+.side-nav-button{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    padding: 0px 20px;
+    border-right: 1px solid #d9d9e2;
+    width: '50px';
+    max-width: 70px;
+    
+    i{
+        color: #3b4d6391; ;
+        font-size: 37px;
+    }
+}
+
+.header-content{
+    display:flex ;
+    align-items: center;
+    justify-content: space-between;
+
+    .logout{
+        margin-right: 20px;
+        cursor: pointer;
+        i{
+            font-size: 37px;
+        }
+    }
+    .logout_language_content{
+        display: flex;
+        color: #3b4d6391;;
+        .language{
+            margin-right: 10px;
+        }
+    }
+}
+.dropdown-menu{
+    margin: 5px !important;
+    box-shadow: #0003 0 8px 16px;
+    border-radius: 5px;
+}
+

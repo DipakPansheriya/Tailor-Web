@@ -1,0 +1,77 @@
+<div class="main-card">
+    <h3> Customer List</h3>
+    <button class="btn btn-primary addNewBtn" (click)="addNewCutomer()">+ Add New Customer </button>
+</div>
+
+<div class="row">
+    <p-table #customer_table [value]="customersList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50]" [globalFilterFields]="['mobileNo']" dataKey="mobileNo">
+        <ng-template pTemplate="caption">
+            <div class="searchBar">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="clear(customer_table)"></button>
+                <span class="p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" id="orderSearch"  (input)="customer_table.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search by Mo. No." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>First Name </th>
+                <th>Last Name </th>
+                <th>Mobile No.</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-columns="columns">
+            <tr>
+                <td>{{item.firstName}}</td>
+                <td>{{item.lastName}}</td>
+                <td>{{item.mobileNo}}</td>
+                <td>
+                    <div class="edit" (click)="editCustomer(item)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="card flex justify-content-center">
+    <p-dialog [header]="dialogHeader" [(visible)]="isDialogvisible" [style]="{width: '50%'}">
+        <div class="row" [formGroup]="customerForm">
+            <div class="col-md-4">
+                <label>First Name</label><span class="required">*</span>
+                <input pInputText type="text" class="form-control" formControlName="firstName"  (keydown)="inputRestriction($event, 'name')"/>
+            </div>
+            <div class="col-md-4">
+                <label>Last Name</label><span class="required">*</span>
+                <input pInputText type="text" class="form-control" formControlName="lastName"  (keydown)="inputRestriction($event, 'name')"/>
+            </div>
+            <div class="col-md-4">
+                <label>Mobile No.</label><span class="required">*</span>
+                <input pInputText type="text" class="form-control" formControlName="mobileNo"  minlength="10" maxlength="10" (keydown)="inputRestriction($event, 'mobile')" (keyup.enter)="onSubmit()" />
+            </div>
+        </div>
+        <!-- <div class="submitBtn_main">
+            <button class="btn btn-primary submitBtn" [ngClass]="customerForm.invalid ? 'disabled' : '' " (click)="onSubmit()" [disabled]="customerForm.invalid"> {{submitBtnLable}} </button>
+        </div> -->
+
+        <div class="submitBtn">
+            <button class="submit" [ngClass]="customerForm.invalid ? 'disabled' : '' " (click)="onSubmit()" [disabled]="customerForm.invalid">
+                {{submitBtnLable}}
+            </button>
+        </div>
+
+
+    </p-dialog>
+</div>

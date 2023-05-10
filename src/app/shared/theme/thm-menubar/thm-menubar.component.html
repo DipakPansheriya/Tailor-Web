@@ -1,0 +1,38 @@
+<div class="sidenav-content">
+    <!--[ngClass]="sideNavStatus == true ? 'show-side-content':'hide-side-content'"-->
+    <div class="logo">
+        <!-- <img src="../../../../assets/img/product-500x500 (1).jpeg" alt=""> -->
+    </div>
+    <ul class="nav-list" >
+        <li routerLink="/web/dashboard" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-home" aria-hidden="true"></i> <span>{{'MENUBAR.DASHBOARD' | translate}}</span> 
+        </li>
+        <li routerLink="/web/customers" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-users" aria-hidden="true"></i> <span>{{'MENUBAR.CUSTOMER_LIST' | translate}}</span> 
+        </li>
+        <li routerLink="/web/orders" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>{{'MENUBAR.ORDERS' | translate}}</span> 
+        </li>
+        <li routerLink="/web/pattern-master" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-book" aria-hidden="true"></i> <span>{{'MENUBAR.PATTERN' | translate}}</span> 
+        </li>
+        <!-- <li routerLink="/web/addemployee" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>{{'MENUBAR.Add_Employee' | translate}}</span> 
+        </li>
+        <li routerLink="/web/project-master" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-code" aria-hidden="true"></i> <span>{{'MENUBAR.Add_Project' | translate}}</span> 
+        </li>
+        <li routerLink="/web/bonusattendance" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-user-o" aria-hidden="true"></i> <span>{{'MENUBAR.Bonus_Attendance' | translate}}</span> 
+        </li>
+        <li routerLink="/web/report" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-book" aria-hidden="true"></i> <span>{{'MENUBAR.Report' | translate}}</span> 
+        </li> -->
+        <!-- <li routerLink="#" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-cog" aria-hidden="true"></i> <span>{{'MENUBAR.Settings' | translate}}</span> 
+        </li> -->
+        <li (click)="logout()" class="nav-list-item" routerLinkActive="active">
+            <i class="fa fa-sign-in" aria-hidden="true"></i> <span>{{'MENUBAR.Logout' | translate}}</span> 
+        </li>
+    </ul>    
+</div>

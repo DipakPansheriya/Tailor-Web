@@ -1,0 +1,708 @@
+<div class="main-card">
+    <h3> {{'ORDER.ORDERLIST' | translate}}</h3>
+    <p-button data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addOrder()">{{'ORDER.ADD_ORDER_BTN' |
+        translate}} </p-button>
+</div>
+
+<div class="row">
+    <p-table  #order_table [value]="allOrderList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50]" [globalFilterFields]="['customerMobileNo']" dataKey="customerMobileNo">
+        <ng-template pTemplate="caption">
+            <div class="searchBar">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="clear(order_table)"></button>
+                <span class="p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" id="orderSearch" maxlength="10" (input)="order_table.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search by Mo. No." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>{{ 'ORDER.ORDER_LIST.SR_NO' | translate}} </th>
+                <th>{{ 'ORDER.ORDER_LIST.NAME' | translate}} </th>
+                <th>{{ 'ORDER.ORDER_LIST.MOBILE_NO' | translate}}</th>
+                <th>{{ 'ORDER.ORDER_LIST.STATUS' | translate}}</th>
+                <th>{{ 'ORDER.ORDER_LIST.BILL_NO' | translate}}</th>
+                <th>{{ 'ORDER.ORDER_LIST.DELIVERY_DATE' | translate}}</th>
+                <th>{{ 'ORDER.ORDER_LIST.QUANTITY' | translate}}</th>
+                <th>{{ 'ORDER.ORDER_LIST.TYPE' | translate}}</th>
+                <th>{{ 'ORDER.ORDER_LIST.ACTION' | translate}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+            <tr>
+                <td>{{rowIndex + 1}}</td>
+                <td>{{item.customerName}}</td>
+                <td>{{item.customerMobileNo}}</td>
+                <td>{{item.status}}</td>
+                <td>{{item.billNumber}}</td>
+                <td>{{item.deliveryDate | date : "dd/MM/YYYY"}}</td>
+                <td>{{item.garmentType === 'Jodi' ? item.quantity : item.garmentType === 'Shirt' ?
+                    item.shirtDetails.quantity : item.pentDetails.quantity }}</td>
+                <td>{{item.garmentType}}</td>
+                <td>
+                    <div class="edit">
+                        <i class="fa fa-pencil" aria-hidden="true" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" (click)="editOrder(item)"></i>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////////// -->
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{headingName}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="searchBarCustomer">
+                    <div>
+                        <input type="text" pInputText [readonly]="isEdit" [(ngModel)]="searchCustomer"
+                            class="searchInput" [ngClass]="isEdit ? 'searchBarReadOnly' : '' "
+                            [ngModelOptions]="{standalone: true}"
+                            placeholder="{{ 'ORDER.ADD_ORDER.SEARCH_CUSTOMER' | translate }} " (keyup.enter)="search()"
+                            maxlength="10">
+                    </div>
+                    <div class="btn"
+                        [ngStyle]="{'cursor': searchCustomer?.length != 10 ? 'not-allowed' : 'pointer' , 'pointer-events' : searchCustomer?.length != 10 ? 'none' : '' }"
+                        *ngIf="!isEdit">
+                        <p-button (onClick)="search()" [disabled]="searchCustomer?.length != 10"
+                            label="{{ 'ORDER.ADD_ORDER.SEARCH' | translate}}"></p-button>
+                    </div>
+                </div>
+                <div *ngIf="customerId">
+                    <div class="row">
+                        <div class="col-4">
+                            <label>{{ 'ORDER.ADD_ORDER.CUSTOMER_NAME' | translate}} : </label>
+                            <span>{{fullName}}</span>
+                        </div>
+                        <div class="col-4">
+                            <label>{{ 'ORDER.ADD_ORDER.CUSTOMER_MOBILE' | translate}} : </label>
+                            <span>{{mobileNo}}</span>
+                        </div>
+                    </div>
+                    <div [formGroup]="jodiForm">
+
+                        <div class="d-flex">
+                            <label>{{ 'ORDER.ADD_ORDER.GARMENT_TYPE' | translate}} :</label>
+                            <div class="flex align-items-center">
+                                <p-radioButton class="radioBtn" value="Jodi" formControlName="garmentType"
+                                    inputId="type1"></p-radioButton>
+                                <label for="type1" class="ml-2 radioLable">{{
+                                    'ORDER.ADD_ORDER.JODI' | translate}}</label>
+                            </div>
+
+                            <div class="flex align-items-center">
+                                <p-radioButton class="radioBtn" value="Pent" formControlName="garmentType"
+                                    inputId="type2"></p-radioButton>
+                                <label for="type2" class="ml-2 radioLable">{{
+                                    'ORDER.ADD_ORDER.PENT' | translate}}</label>
+                            </div>
+
+                            <div class="flex align-items-center">
+                                <p-radioButton class="radioBtn" value="Shirt" formControlName="garmentType"
+                                    inputId="type4"></p-radioButton>
+                                <label for="type4" class="ml-2 radioLable">{{
+                                    'ORDER.ADD_ORDER.SHIRT' | translate}}</label>
+                            </div>
+                        </div>
+
+                        <!-- ============= Pent =============== -->
+
+                        <div *ngIf="jodiForm.value.garmentType == 'Pent' ">
+                            <div class="row" style="margin: 20px;">
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.L' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentL" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.K' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentK" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.SEE' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="shi" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.MO' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="mo" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JA' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="ja" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JO' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="jo" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.GO' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="go" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="input">
+                                                        <label>{{ 'ORDER.ADD_ORDER.DELIVERY_DATE' | translate}} :
+                                                        </label>
+                                                        <p-calendar [dateFormat]="'dd/mm/yy'" [showIcon]="true"
+                                                            formControlName="deliveryDate" [minDate]="currentDate"></p-calendar>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="input">
+                                                        <label>{{ 'ORDER.ADD_ORDER.QUANTITY' | translate}} : </label>
+                                                        <input type="text" (keydown)="inputRestriction($event, 'qty')"  pInputText formControlName="pentQuantity">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="multiSelect">
+                                            <div class="dropdown">
+                                                <label>{{ 'ORDER.ADD_ORDER.PENT_PATTERN_TYPE' | translate}} : </label>
+                                                <p-multiSelect [options]="pentPatternsList" optionLabel="patternName"
+                                                    formControlName="pentPatterns"
+                                                    (ngModelChange)="jodiPatternSelection('pent')" display="chip">
+                                                </p-multiSelect>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label>{{ 'ORDER.ADD_ORDER.PATTERN_ADDITIONAL' | translate}} : </label>
+                                            <div class="patternDes">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr class="tHead">
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.SR_NO' |
+                                                                translate}}
+                                                            </th>
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PATTERN_NAME' |
+                                                                translate}} </th>
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PRICE' |
+                                                                translate}}
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            *ngFor="let item of jodiForm.value.pentPatterns; let i = index">
+                                                            <td>{{i + 1 }}</td>
+                                                            <td>{{item.patternName}}</td>
+                                                            <td>{{item.patternPrice}} &#8377;</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="2">{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} :</td>
+                                                            <td> <b> {{jodiForm.value.pentTotalExtraCost}} &#8377; </b>
+                                                            </td>
+                                                            <!-- <td></td>
+                                                            <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
+                                                                    {{jodiForm.value.pentTotalExtraCost}} &#8377; </b>
+                                                            </span> -->
+                                                        </tr>
+
+                                                        <!-- <div style="padding: 10px;"> -->
+                                                        <!-- </div> -->
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="measurement">
+                                            <label>{{ 'ORDER.ADD_ORDER.DESCRIPTION' | translate}} : </label>
+                                            <textarea pInputText cols="30" rows="4"
+                                                formControlName="pentAdditionalDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ============= Shirt =============== -->
+
+                        <div class="p-3" *ngIf="jodiForm.value.garmentType == 'Shirt' ">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="d-flex">
+                                            <label>{{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHIRT_TYPE' | translate}}
+                                                :</label>
+                                            <div class="flex align-items-center">
+                                                <p-radioButton class="radioBtn" value="Open" formControlName="shirtType"
+                                                    inputId="type3">
+                                                </p-radioButton>
+                                                <label for="type3" class="ml-2 radioLable">{{
+                                                    'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHIRT_OPEN' |
+                                                    translate}}</label>
+                                            </div>
+
+                                            <div class="flex align-items-center">
+                                                <p-radioButton class="radioBtn" value="Bushirt"
+                                                    formControlName="shirtType" inputId="type5">
+                                                </p-radioButton>
+                                                <label for="type5" class="ml-2 radioLable">{{
+                                                    'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHIRT_BUSHIRT' |
+                                                    translate}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="measurement">
+                                            <div class="p-inputgroup m-2">
+                                                <span class="p-inputgroup-addon">
+                                                    {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.L' | translate}}
+                                                </span>
+                                                <input pInputText (keydown)="inputRestriction($event)"  formControlName="shirtL" />
+                                            </div>
+                                            <div class="p-inputgroup m-2">
+                                                <span class="p-inputgroup-addon">
+                                                    {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.BA' | translate}}
+                                                </span>
+                                                <input pInputText (keydown)="inputRestriction($event)"  formControlName="ba" />
+                                            </div>
+                                            <div class="p-inputgroup m-2">
+                                                <span class="p-inputgroup-addon">
+                                                    {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.CHA' | translate}}
+                                                </span>
+                                                <input pInputText (keydown)="inputRestriction($event)"  formControlName="cha" />
+                                            </div>
+                                            <div class="col-12 sholderMain m-2">
+                                                <div class="col-4 sholInput">
+                                                    <div class="p-inputgroup">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHO' | translate}}
+                                                        </span>
+                                                        <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="sho1" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 sholInput">
+                                                    <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="sho2" />
+                                                </div>
+                                                <div class="col-4 sholInput">
+                                                    <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="sho3" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 sholderMain m-2">
+                                                <div class="col-4 sholInput">
+                                                    <div class="p-inputgroup">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.PREY' | translate}}
+                                                        </span>
+                                                        <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe1" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 sholInput">
+                                                    <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe2" />
+                                                </div>
+                                                <div class="col-4 sholInput">
+                                                    <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe3" />
+                                                </div>
+                                                <div class="col-4 sholInput">
+                                                    <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe4" />
+                                                </div>
+                                            </div>
+                                            <div class="p-inputgroup m-2">
+                                                <span class="p-inputgroup-addon">
+                                                    {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.KO' | translate}}
+                                                </span>
+                                                <input pInputText (keydown)="inputRestriction($event)"  formControlName="ko" />
+                                            </div>
+                                            <div class="p-inputgroup m-2">
+                                                <span class="p-inputgroup-addon">
+                                                    {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.K' | translate}}
+                                                </span>
+                                                <input pInputText (keydown)="inputRestriction($event)"  formControlName="shirtK" />
+                                            </div>
+                                            <div class="p-inputgroup m-2">
+                                                <span class="p-inputgroup-addon">
+                                                    {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.KH' | translate}}
+                                                </span>
+                                                <input pInputText (keydown)="inputRestriction($event)"  formControlName="kh" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="multiSelect">
+                                            <div class="dropdown m-2">
+                                                <label>{{ 'ORDER.ADD_ORDER.SHIRT_PATTERN_TYPE' | translate}} : </label>
+                                                <p-multiSelect [options]="shirtPatternsList" optionLabel="patternName"
+                                                    formControlName="shirtPatterns"
+                                                    (ngModelChange)="jodiPatternSelection('shirt')" display="chip">
+                                                </p-multiSelect>
+                                            </div>
+                                        </div>
+                                        <div class="measurement">
+                                            <label>{{ 'ORDER.ADD_ORDER.PATTERN_ADDITIONAL' | translate}} : </label>
+                                            <div class="patternDes">
+                                                <div class="table">
+                                                    <table class="table">
+                                                        <tr class="tHead">
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.SR_NO' |
+                                                                translate}}
+                                                            </th>
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PATTERN_NAME' |
+                                                                translate}} </th>
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PRICE' |
+                                                                translate}}
+                                                            </th>
+                                                        </tr>
+                                                        <tr
+                                                            *ngFor="let item of jodiForm.value.shirtPatterns; let i = index">
+                                                            <td>{{i + 1 }}</td>
+                                                            <td>{{item.patternName}}</td>
+                                                            <td>{{item.patternPrice}} &#8377;</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div style="padding: 10px;">
+                                                    <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
+                                                            {{jodiForm.value.shirtTotalExtraCost}} &#8377;
+                                                        </b>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="measurement">
+                                            <label>{{ 'ORDER.ADD_ORDER.DESCRIPTION' | translate}} : </label>
+                                            <textarea pInputText cols="30" rows="4"
+                                                formControlName="shirtAdditionalDesc"></textarea>
+                                        </div>
+                                        <div class="measurement">
+                                            <label>{{ 'ORDER.ADD_ORDER.DELIVERY_DATE' | translate}} : </label>
+                                            <p-calendar [dateFormat]="'dd/mm/yy'" [showIcon]="true"
+                                                formControlName="deliveryDate" [minDate]="currentDate"></p-calendar>
+                                        </div>
+                                        <div class="measurement" *ngIf="jodiForm.value.garmentType == 'Shirt' ">
+                                            <label>{{ 'ORDER.ADD_ORDER.QUANTITY' | translate}} : </label>
+                                            <input type="text" (keydown)="inputRestriction($event,'qty')"  pInputText formControlName="shirtQuantity">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==================Jodi=============== -->
+
+                        <div class="JodiData" *ngIf="jodiForm.value.garmentType == 'Jodi' ">
+                            <div class="row p-3">
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.L' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentL" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.K' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentK" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.SEE' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="shi" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.MO' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="mo" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JA' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="ja" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JO' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="jo" />
+                                                </div>
+                                                <div class="p-inputgroup m-2">
+                                                    <span class="p-inputgroup-addon">
+                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.GO' | translate}}
+                                                    </span>
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="go" />
+                                                </div>
+                                                <div class="multiSelect">
+                                                    <div class="dropdown m-2">
+                                                        <label>{{ 'ORDER.ADD_ORDER.PENT_PATTERN_TYPE' | translate}} :
+                                                        </label>
+                                                        <p-multiSelect [options]="pentPatternsList"
+                                                            optionLabel="patternName" formControlName="pentPatterns"
+                                                            (ngModelChange)="jodiPatternSelection('pent')"
+                                                            display="chip">
+                                                        </p-multiSelect>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="measurement">
+                                            <label>{{ 'ORDER.ADD_ORDER.PATTERN_ADDITIONAL' | translate}} : </label>
+                                            <div class="patternDes">
+                                                <div class="table">
+                                                    <table class="table">
+                                                        <tr class="tHead">
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.SR_NO' |
+                                                                translate}}
+                                                            </th>
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PATTERN_NAME' |
+                                                                translate}} </th>
+                                                            <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PRICE' |
+                                                                translate}}
+                                                            </th>
+                                                        </tr>
+                                                        <tr
+                                                            *ngFor="let item of jodiForm.value.pentPatterns; let i = index">
+                                                            <td>{{i + 1 }}</td>
+                                                            <td>{{item.patternName}}</td>
+                                                            <td>{{item.patternPrice}} &#8377;</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div style="padding: 10px;">
+                                                    <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
+                                                            {{jodiForm.value.pentTotalExtraCost}} &#8377; </b>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="measurement">
+                                            <label>{{ 'ORDER.ADD_ORDER.DESCRIPTION' | translate}} : </label>
+                                            <textarea pInputText cols="30" rows="4"
+                                                formControlName="pentAdditionalDesc"></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="measurement">
+                                                    <label>{{ 'ORDER.ADD_ORDER.DELIVERY_DATE' | translate}} : </label>
+                                                    <p-calendar [dateFormat]="'dd/mm/yy'" [showIcon]="true"
+                                                        formControlName="deliveryDate" [minDate]="currentDate"></p-calendar>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="measurement">
+                                                    <label>{{ 'ORDER.ADD_ORDER.QUANTITY' | translate}} : </label>
+                                                    <input type="text" pInputText (keydown)="inputRestriction($event,'qty')" formControlName="jodiQuantity">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="d-flex">
+                                                <label>{{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHIRT_TYPE' |
+                                                    translate}}</label>
+                                                <div class="flex align-items-center">
+                                                    <p-radioButton class="radioBtn" value="Open" formControlName="shirtType" inputId="type7">
+                                                    </p-radioButton>
+                                                    <label for="type7" class="ml-2 radioLable">{{
+                                                        'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHIRT_OPEN' |
+                                                        translate}}</label>
+                                                </div>
+                                            
+                                                <div class="flex align-items-center">
+                                                    <p-radioButton class="radioBtn" value="Bushirt" formControlName="shirtType" inputId="type6">
+                                                    </p-radioButton>
+                                                    <label for="type6" class="ml-2 radioLable">{{
+                                                        'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHIRT_BUSHIRT' |
+                                                        translate}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="p-inputgroup m-2">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.L' | translate}}
+                                                        </span>
+                                                        <input pInputText (keydown)="inputRestriction($event)"  formControlName="shirtL" />
+                                                    </div>
+                                                    <div class="p-inputgroup m-2">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.BA' | translate}}
+                                                        </span>
+                                                        <input pInputText (keydown)="inputRestriction($event)"  formControlName="ba" />
+                                                    </div>
+                                                    <div class="p-inputgroup m-2">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.CHA' | translate}}
+                                                        </span>
+                                                        <input pInputText (keydown)="inputRestriction($event)"  formControlName="cha" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="p-inputgroup m-2">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.KO' | translate}}
+                                                        </span>
+                                                        <input pInputText (keydown)="inputRestriction($event)"  formControlName="ko" />
+                                                    </div>
+                                                    <div class="p-inputgroup m-2">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.K' | translate}}
+                                                        </span>
+                                                        <input pInputText (keydown)="inputRestriction($event)"  formControlName="shirtK" />
+                                                    </div>
+                                                    <div class="p-inputgroup m-2">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.KH' | translate}}
+                                                        </span>
+                                                        <input pInputText (keydown)="inputRestriction($event)"  formControlName="kh" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="jodisholderMain m-2">
+                                                            <div class="col-4 sholInput">
+                                                                <div class="p-inputgroup">
+                                                                    <span class="p-inputgroup-addon">
+                                                                        {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.SHO' | translate}}
+                                                                    </span>
+                                                                    <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="sho1" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4 sholInput">
+                                                                <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="sho2" />
+                                                            </div>
+                                                            <div class="col-4 sholInput">
+                                                                <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="sho3" />
+                                                            </div>
+                                                    </div>
+                                                    <div class="jodisholderMain m-2">
+                                                            <div class="col-4 sholInput">
+                                                                <div class="p-inputgroup">
+                                                                    <span class="p-inputgroup-addon">
+                                                                        {{ 'ORDER.ADD_ORDER.SHIRT_MEASUREMENT.PREY' | translate}}
+                                                                    </span>
+                                                                    <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe1" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4 sholInput">
+                                                                <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe2" />
+                                                            </div>
+                                                            <div class="col-4 sholInput">
+                                                                <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe3" />
+                                                            </div>
+                                                            <div class="col-4 sholInput">
+                                                                <input pInputText class="w-100" (keydown)="inputRestriction($event)"  formControlName="pe4" />
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="padding: 10px;">
+                                            <div class="multiSelect">
+                                                <div class=" m-2">
+                                                    <label>{{ 'ORDER.ADD_ORDER.SHIRT_PATTERN_TYPE' | translate}} :
+                                                    </label>
+                                                    <p-multiSelect [options]="shirtPatternsList"
+                                                        optionLabel="patternName" formControlName="shirtPatterns"
+                                                        (ngModelChange)="jodiPatternSelection('shirt')" display="chip">
+                                                    </p-multiSelect>
+                                                </div>
+                                            </div>
+                                            <div class="measurement">
+                                                <label>{{ 'ORDER.ADD_ORDER.PATTERN_ADDITIONAL' | translate}} : </label>
+                                                <div class="patternDes">
+                                                    <div class="table">
+                                                        <table class="table">
+                                                            <tr class="tHead" >
+                                                                <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.SR_NO' |
+                                                                    translate}}
+                                                                </th>
+                                                                <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PATTERN_NAME' |
+                                                                    translate}} </th>
+                                                                <th>{{ 'ORDER.ADD_ORDER.JODI_MEASUREMENT.PRICE' |
+                                                                    translate}}
+                                                                </th>
+                                                            </tr>
+                                                            <tr
+                                                                *ngFor="let item of jodiForm.value.shirtPatterns; let i = index">
+                                                                <td>{{i + 1 }}</td>
+                                                                <td>{{item.patternName}}</td>
+                                                                <td>{{item.patternPrice}} &#8377;</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div style="padding: 10px;">
+                                                        <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
+                                                                {{jodiForm.value.shirtTotalExtraCost}} &#8377;
+                                                            </b>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="measurement">
+                                                <label>{{ 'ORDER.ADD_ORDER.DESCRIPTION' | translate}} : </label>
+                                                <textarea pInputText cols="30" rows="4"
+                                                    formControlName="shirtAdditionalDesc"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="jodiSubmit()" data-bs-dismiss="modal" [disabled]="!jodiForm.valid">{{
+                'ORDER.ADD_ORDER.SUBMIT' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,250 @@
+.addNewBtn {
+    background-color: #50C2C9;
+    border-radius: 5px;
+    padding: 6px;
+    color: #fff;
+}
+
+.searchBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-card {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+.edit {
+    background-color: #50C2C9;
+    border-radius: 50%;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    width: 30%;
+    color: aliceblue;
+}
+
+.searchBtn {
+    margin-left: 10px;
+    padding: 12px 25px 12px 25px;
+}
+.jodiinput{
+    display: flex;
+    // flex-direction: column;
+
+    input{
+            margin: 10px;
+    }
+        .jodilabel{
+            display: flex;
+            align-items: center;
+        }
+}
+.secondDiv {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    input {
+        margin: 10px;
+    }
+
+    .jodilabel {
+        display: flex;
+        align-items: center;
+    }
+}
+
+// .patternButton {
+//     margin: 20px 0px 7px 8px px;
+//     padding: 5px;
+// }
+
+:host::ng-deep .p-multiselect {
+    width: 100%;
+    .p-multiselect-label {
+        // padding: 5.5px !important;
+        padding: 10px;
+        width: 100%;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.logo {
+    width: 100%;
+    height: 201px;
+    display: block;
+    border-radius: 11px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 10px 0px;
+    padding: 5px;
+}
+
+.invoice {
+    border: 2px solid #000;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+
+.shopName {
+    text-align: center;
+
+    .heading {
+        font-size: 41px;
+        margin: 12px;
+        padding: 5px;
+        font-weight: 700;
+        font-family: ui-monospace;
+    }
+}
+
+.info{
+    text-align: center;
+    font-size: 22px;
+
+    .infoText{
+        margin: 12px;
+        padding: 5px;
+        font-weight: 500;
+    }
+}
+
+.p-input-icon-left {
+    width: 100%;
+}
+
+.headerBox {
+    width: 100%;
+    height: 170px;
+    border: 1px dotted #000;
+    border-radius: 5px;
+}
+
+.multiSelect{
+    width: 100%;
+    display: flex;
+    .button{
+        margin: 20px 0px 1px 5px;
+    }
+}
+
+.submit {
+    text-align: center;
+    margin-top: 15px;
+}
+
+// .pattern {
+//     display: flex;
+//     .patternLabel {
+//         width: 160px;
+//         padding: 16px;
+//     }
+// }
+.measurement {
+    display: grid;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 12px;
+}
+
+.dropdown {
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+}
+
+.patternDes{
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    .table{
+        width: 100%;
+    }
+}
+.searchBarCustomer {
+    display: flex;
+    width: 100%;
+    .btn {
+        margin-left: 10px;
+        padding: 0;
+        width: 100px;
+    }
+    .searchInput{
+        width: 350px;
+    }
+}
+
+.radioBtn{
+    margin-left: 20px;
+}
+.radioLable{
+    margin-left: 7px;
+}
+
+.sholderMain{
+    display: flex;
+    align-items: center;
+    width: 71%;
+
+    .sholInput {
+            margin-right: 10px;
+    }
+    
+    .peInput {
+        margin-right: 10px;
+    }
+
+
+    .searchBarReadOnly {
+        background-color: #cacdd1;
+        color: #000;
+        font-weight: 500;
+    }
+
+    input:read-only {
+        background-color: yellow;
+    }
+}
+
+.jodisholderMain {
+    display: flex;
+    align-items: center;
+
+    .sholInput {
+        margin-right: 10px;
+        width: 24.3%;
+            }
+        
+    .peInput {
+        margin-right: 10px;
+    }
+}
+
+.modal-dialog{
+    max-width: 80%;
+}
+
+.card{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 15px;
+}
+.input{
+    display: flex;
+    flex-direction: column;
+}
+
+ ::ng-deep .p-inputtext:enabled:focus{
+    box-shadow: none;
+ }
+
+ .tHead{
+   background:  #e0e0e0
+ }

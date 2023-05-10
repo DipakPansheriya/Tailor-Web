@@ -1,0 +1,41 @@
+@import '../scss/_variable.scss';
+
+@mixin dashboard_icon {
+    background: linear-gradient(195deg,#42424a,#191919);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    width: 20%;
+    border-radius: 0.75rem;
+    text-align: center;
+    padding: 3%;
+    margin-left: 3%;
+    i{
+        color: #fff;
+    }
+}
+@mixin button {
+    margin: 10px;
+    padding: 9px 25px;
+    font-size: 14px;
+    color: $primary-color;
+    letter-spacing: 0.6px;
+    border-radius: 6px;
+    margin-left: 30px;
+    background: $button-bg-color;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 0 10px 1px $first-color;
+    }
+
+}
+@mixin button_icon {
+    font-weight: 400;
+    color: $primary-color;
+    letter-spacing: 0.6px;
+    border-radius: 6px;
+    background: $button-bg-color;
+    transition: all 0.3s ease-in-out;
+    padding: 4px 10px;
+    margin-right: 15px;
+    font-size: 19px;
+}
