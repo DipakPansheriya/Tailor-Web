@@ -24,17 +24,36 @@
     cursor: pointer;
 }
 
-.submitBtn {
-    width: 120px;
-    text-align: center;
-    background-color: #50c2c9;
-    color: #fff;
-    border-radius: 5px;
-    padding: 5px;
-    margin-top: 10px;
-}
+// .submitBtn {
+//     width: 120px;
+//     text-align: center;
+//     background-color: #50c2c9;
+//     color: #fff;
+//     border-radius: 5px;
+//     padding: 5px;
+//     margin-top: 10px;
+// }
 
 .submitBtn_main {
     display: flex;
     justify-content: center;
+}
+
+.submitBtn {
+    text-align: center;
+}
+
+.disabled {
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+
+.submit {
+    width: 111px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 10px;
+    background-color: #2362c9;
 }

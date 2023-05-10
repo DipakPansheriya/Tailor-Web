@@ -47,11 +47,11 @@
         <div class="pattern">
             <label class="patternLabel">{{ 'PATTERN_MASTER.PATTERN_NAME' | translate}}</label>
             <input type="text" pInputText class="form-control" [(ngModel)]="patternName"
-                placeholder="Enter Pattern Name">
+                placeholder="Enter Pattern Name"  (keydown)="inputRestriction($event, 'name')">
         </div>
         <div class="pattern">
             <label class="patternLabel">{{ 'PATTERN_MASTER.PRICE' | translate}}</label>
-            <input type="text" pInputText class="form-control" [(ngModel)]="patternPrice" placeholder="Enter Enter price" (keydown)="inputRestriction($event)">
+            <input type="text" pInputText class="form-control" [(ngModel)]="patternPrice" placeholder="Enter Enter price" (keydown)="inputRestriction($event, 'price')">
         </div>
 
         <!-- <div class="pattern">
@@ -77,8 +77,8 @@
             </div>
         </div>
 
-        <div class="submitBtn">
-            <button class="submit" [ngStyle]="{'cursor': !isValid() ? 'not-allowed' : 'pointer' }" (click)="patternSubmit()" [disabled]="!isValid()" >
+        <div class="submitBtn"> 
+            <button class="submit" [ngClass]="!isValid() ? 'disabled' : ''" (click)="patternSubmit()" [disabled]="!isValid()" >
                 {{ 'PATTERN_MASTER.SUBMIT' | translate}}
             </button>
         </div>

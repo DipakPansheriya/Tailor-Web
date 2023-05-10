@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
 import { CustomMessageService } from 'src/app/service/custom-message/custom-message.service';
+import { FirebaseService } from 'src/app/service/firebase.service';
 import { msgType } from 'src/assets/Constant/message-constant';
 
 @Component({
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private messageService: CustomMessageService,
+    private firebaseService: FirebaseService,
     
               ) { }
 
@@ -41,6 +43,12 @@ export class LoginComponent implements OnInit {
   submit() : void {
     this.authService.signIn(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       (res) => {
+        this.firebaseService.getAllUserList().subscribe((res: any) => {
+          if (res) {
+            const setItem = res.find((id: any) => id.email === this.loginForm.value.username).id
+            localStorage.setItem('userId',setItem)
+          }
+        })
         this.router.navigate(['web/dashboard'])
       }, (error) => {
         this.messageService.openCustomMessage(msgType.ERROR, error.error.error.message)

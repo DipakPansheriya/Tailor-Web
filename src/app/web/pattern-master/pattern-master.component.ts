@@ -20,6 +20,7 @@ export class PatternMasterComponent implements OnInit {
   patternId : any ;
   headingName = 'Add New Pattern';
   validPricePattern: RegExp = new RegExp(/^\d{0,10}$/g);
+  validPatternName: RegExp = new RegExp(/^[a-zA-Z ]*$/g);
   // private regexPettern: RegExp = new RegExp(/^\d*\.?\d{0,3}$/g);
   // private regexPettern: RegExp = new RegExp(/^\d{0,10}$/g);
   // private allowedSpecialKeys: Array<string> = [
@@ -111,8 +112,12 @@ export class PatternMasterComponent implements OnInit {
     return result
   }
 
-  inputRestriction(event: any): any {
-    this.messageService.inputRestriction(event, this.validPricePattern)
+  inputRestriction(event: any, type: any): any {
+    if (type === 'price') {
+      this.messageService.inputRestriction(event, this.validPricePattern)
+    } else {
+      this.messageService.inputRestriction(event, this.validPatternName)
+    }
     // const value = event.target.value;
     // console.log(event.target.value, value);
     // if (this.allowedSpecialKeys.indexOf(event.key) !== -1) {

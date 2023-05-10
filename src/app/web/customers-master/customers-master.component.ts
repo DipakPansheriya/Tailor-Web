@@ -22,7 +22,9 @@ export class CustomersMasterComponent implements OnInit {
   dialogHeader: string = 'Add New Customer';
   submitBtnLable = 'Submit';
   customersList: any = [];
-  private mobileValidPattern: RegExp = new RegExp(/^\d{0,10}$/g);
+  mobileValidPattern: RegExp = new RegExp(/^\d{0,10}$/g);
+  validPatternName: RegExp = new RegExp(/^[a-zA-Z ]*$/g);
+
 
   // customersList = [
   //   {
@@ -126,6 +128,8 @@ export class CustomersMasterComponent implements OnInit {
 
   clear(table: Table) {
     table.clear();
+    const element: any = document.getElementById('orderSearch');
+    element.value = ''
   }
 
 
@@ -156,7 +160,7 @@ export class CustomersMasterComponent implements OnInit {
       mobileNo: Number(this.customerForm.value.mobileNo),
     }
     if (!this.customerId) {
-      this.fireBaseService.addData(paylod).then((res) => {
+      this.fireBaseService.addCustomerData(paylod).then((res) => {
         if (res) {
           this.messageService.openCustomMessage(msgType.SUCCESS, 'Customer Added successfuly!!');
           this.customerForm.reset();
@@ -165,7 +169,7 @@ export class CustomersMasterComponent implements OnInit {
       })
       .catch(error => this.messageService.openCustomMessage(msgType.SUCCESS, error.error.error.message))
     } else {
-      this.fireBaseService.updateData(this.customerId, paylod).then((res) => {
+      this.fireBaseService.updateCustomerData(this.customerId, paylod).then((res) => {
           this.messageService.openCustomMessage(msgType.SUCCESS, 'Customer Updated successfuly!!');
           this.customerForm.reset();
           this.isDialogvisible = false
@@ -183,7 +187,12 @@ export class CustomersMasterComponent implements OnInit {
   }
 
 
-  mobileInputRestriction(event: any): any {
-    this.messageService.inputRestriction(event, this.mobileValidPattern)
+  inputRestriction(event: any, type: any): any {
+    if (type === 'mobile') {
+      this.messageService.inputRestriction(event, this.mobileValidPattern)
+    } else {
+      this.messageService.inputRestriction(event, this.validPatternName)
+    }
   }
+
 }
