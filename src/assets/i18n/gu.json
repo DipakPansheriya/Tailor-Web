@@ -13,6 +13,18 @@
 		"TOTAL_ORDERS": "કુલ ઓર્ડર",
 		"TOTAL_CUSTOMERS": "કુલ ગ્રાહકો"
 	},
+	"CUSTOMER_MASTER": {
+		"FIRSTNAME": "પહેલું નામ",
+		"LASTTNAME": "છેલ્લું નામ",
+		"MOBILE": "મોબાઇલ નં.",
+		"ACTION": "એક્શન",
+		"CUSTOMER_LIST": "ગ્રાહકની યાદી",
+		"ADD_NEW_CUSTOMER": "નવા ગ્રાહકને ઉમેરો",
+		"SUBMIT": "સબમિટ કરો",
+		"UPDATE": "સુધારો કરો",
+		"NOCUSTOMER": "કોઈ ગ્રાહકો મળ્યા નથી!!"
+	},
+
 	"ORDER": {
 		"NO_RECDE_FOUND": "કોઈ રેકોડૅ મળ્યો નથી",
 		"ADD_ORDER_BTN": "+ નવો ઓર્ડર ઉમેરો",

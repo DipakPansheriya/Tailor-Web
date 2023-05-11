@@ -100,6 +100,17 @@
         "CATEGORY" : "Category",
         "SUBMIT" : "Submit"
     },
+    "CUSTOMER_MASTER" : {
+        "FIRSTNAME" : "First Name",
+        "LASTTNAME" : "Last Name",
+        "MOBILE" : "Mobile No.",
+        "ACTION" : "Action",
+        "CUSTOMER_LIST" : "Customer List",
+        "ADD_NEW_CUSTOMER" : "Add New Customer",
+        "SUBMIT" : "Submit",
+        "UPDATE" : "Update",
+        "NOCUSTOMER" : "No customers found!!"
+    },
     "MSGTITLE": {
         "SUCCESS": "success",
         "INFO": "Info",

@@ -37,7 +37,6 @@ export class ForgotpasswordComponent implements OnInit {
 
 
   submit() {
-    debugger
     this.authService.forgotPassword(this.forgotPasswordForm.value.email).subscribe(
       (res) => {
         this.messageService.openCustomMessage(msgType.SUCCESS, `Email sent for Password Reset..`)

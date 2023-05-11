@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         this.firebaseService.getAllUserList().subscribe((res: any) => {
           if (res) {
             const setItem = res.find((id: any) => id.email === this.loginForm.value.username).id
-            localStorage.setItem('userId',setItem)
+            localStorage.setItem('userId', setItem)
           }
         })
         this.router.navigate(['web/dashboard'])
