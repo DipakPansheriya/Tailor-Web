@@ -1,5 +1,5 @@
 .addNewBtn {
-    background-color: #50C2C9;
+    background-color: #3b4d63;
     border-radius: 5px;
     padding: 6px;
     color: #fff;
@@ -17,13 +17,12 @@
 }
 
 .edit {
-    background-color: #50C2C9;
     border-radius: 50%;
     padding: 5px;
     text-align: center;
     cursor: pointer;
     width: 30%;
-    color: aliceblue;
+    color: #50C2C9;
 }
 
 .searchBtn {
@@ -248,3 +247,122 @@
  .tHead{
    background:  #e0e0e0
  }
+
+ .progress_status{
+    span{
+        animation: wiggle 2s linear infinite;
+        padding: 6px 0px;
+        border-radius: 6px;
+        width: 100px;
+        background: linear-gradient(118deg, #fff6e5, #fff6e5);
+        font-weight: 700;
+        color: #ffab01;
+        border: none;
+        cursor: auto;
+    }
+}
+
+.action{
+    display: flex;
+}
+
+.pending_status{
+    span{
+        // animation: wiggle 2s linear infinite;
+        padding: 6px 0px;
+        border-radius: 6px;
+        width: 100px;
+        background: linear-gradient(118deg, #f5e7e5, #f5e7e5);
+        font-weight: 700;
+        color: #fe5948;
+        border: none;
+        cursor: auto;
+    }
+}
+.done_status{
+    span{
+        padding: 6px 0px;
+        border-radius: 6px;
+        width: 100px;
+        background: linear-gradient(118deg, #ebfbf3, #ebfbf3);
+        font-weight: 700;
+        color: #39dc86;
+        border: none;
+        cursor: auto;
+    }
+}
+
+.status_button {
+    .status_done {
+        button {
+            padding: 5px 0px;
+            border-radius: 6px;
+            width: 100px;
+            background:#39dc86; 
+            color: #fff;
+            border: none;
+            margin: 5px;
+
+            &:hover {
+                box-shadow: 0 0 10px 1px #39dc86
+            }
+        }
+    }
+
+    .status_progress {
+        button {
+            padding: 5px 0px;
+            border-radius: 6px;
+            width: 100px;
+            background: #ffab01;
+            color: #fff;
+            margin: 5px;
+
+            &:hover {
+                box-shadow: 0 0 10px 1px #ffab01
+            }
+        }
+    }
+}
+.actionIcon{
+    color: #fff;
+    letter-spacing: .6px;
+    background: #64748b;
+    font-size: 19px;
+    border: none;
+    border-radius: 100%;
+    padding: 5px 15px;
+
+}
+.dropdown-menu{
+    li{
+        a{
+            i{
+                margin: 5px;
+                font-size: 17px;
+            }
+        }
+    }
+}
+.status_order {
+    margin-top: 5px;
+    label {
+        font-size: 21px;
+        font-family: serif;
+        color: #50575e;
+        font-weight: 600;
+        padding-left: 5px;
+    }
+
+    .toggle-off-on {
+        display: flex;
+        align-items: start;
+
+        span {
+            margin-left: 10px;
+            font-size: 20px;
+            font-family: serif;
+            font-weight: 500;
+        }
+    }
+}

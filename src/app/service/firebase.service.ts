@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { addDoc, collection, collectionData, deleteDoc, doc, Firestore } from '@angular/fire/firestore';
 import { updateDoc } from 'firebase/firestore';
-import { CustomerList, OrderMaster, Patterns, UserList } from '../interface/AuthResponse';
+import { ArticalRateInfo, CustomerList, OrderMaster, Patterns, UserList } from '../interface/AuthResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class FirebaseService {
   }
 
   getAllUserList() {
-    let dataRef = collection(this.fService, 'UserList')
+    let dataRef = collection(this.fService, `UserList`)
     return collectionData(dataRef, { idField: 'id' })
   }
 
@@ -68,7 +68,7 @@ export class FirebaseService {
   }
 
   updatePattern(data: Patterns, Patterns: any) {
-    let dataRef = doc(this.fService, `UserList / ${ this.userId() }/Patterns/${data}`);
+    let dataRef = doc(this.fService, `UserList/${ this.userId() }/Patterns/${data}`);
     return updateDoc(dataRef, Patterns)
   }
 
@@ -86,6 +86,27 @@ export class FirebaseService {
   updateOrderMaster(data: OrderMaster, OrderMaster: any) {
     let dataRef = doc(this.fService, `UserList/${ this.userId() }/OrderMaster/${data}`);
     return updateDoc(dataRef, OrderMaster)
+  }
+
+  deleteOrderData(data: Patterns) {
+    let docRef = doc(collection(this.fService, `UserList/${this.userId()}/OrderMaster`), data.id);
+    return deleteDoc(docRef)
+  }
+  // ============= Artical Rate Info Data CRUD
+
+  addArticalRateInfo(data: ArticalRateInfo) {
+    data.id = doc(collection(this.fService, 'id')).id
+    return addDoc(collection(this.fService, 'UserList', this.userId(), 'ArticalRateInfo'), data)
+  }
+
+  getAllArticalRateInfo() {
+    let dataRef = collection(this.fService, `UserList/${this.userId()}/ArticalRateInfo`)
+    return collectionData(dataRef, { idField: 'id' })
+  }
+
+  updateArticalRateInfo(data: ArticalRateInfo, ArticalRateInfo: any) {
+    let dataRef = doc(this.fService, `UserList/${ this.userId() }/ArticalRateInfo/${data}`);
+    return updateDoc(dataRef, ArticalRateInfo)
   }
 
 }

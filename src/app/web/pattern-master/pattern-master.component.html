@@ -1,9 +1,10 @@
-<div class="main-card">
-    <p-button (click)="addNewPattern()"> + {{ 'PATTERN_MASTER.ADD_NEW' | translate}} </p-button>
-</div>
 
 <div class="row">
     <div class="col-6">
+        <div class="main-card">
+            <h4>Add Extra Info List</h4>
+            <p-button styleClass="p-button-secondary" (click)="addNewPattern()"> + {{ 'PATTERN_MASTER.ADD_NEW' | translate}} </p-button>
+        </div>
         <div class="card">
             <p-table [value]="patterns">
                 <ng-template pTemplate="header" let-columns>
@@ -22,11 +23,13 @@
                         <td>{{item.patternCategory}}</td>
                         <td>{{item.patternPrice | currency:'INR' }}</td>
                         <td>
-                            <div class="edit">
-                                <i class="fa fa-pencil" aria-hidden="true" (click)="editPattern(item)"></i>
-                            </div>
-                            <div class="delete">
-                                <i class="fa fa-trash" aria-hidden="true" (click)="deletePattern(item)"></i>
+                            <div class="actionbutton">
+                                <div class="edit">
+                                    <i class="fa fa-pencil" aria-hidden="true" (click)="editPattern(item)"></i>
+                                </div>
+                                <div class="delete">
+                                    <i class="fa fa-trash" aria-hidden="true" (click)="deletePattern(item)"></i>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -36,12 +39,44 @@
     </div>
 
     <div class="col-6">
+        <div class="main-card">
+            <h4>Artical Rate Info List</h4>
+            <p-button styleClass="p-button-secondary" (click)="addArticalRate()" > +Artical Rate</p-button>
+        </div>
 
+        <div class="card">
+            <p-table [value]="articalRateInfoData">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th>Sr</th>
+                        <th>Type</th>
+                        <th>Rate</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                    <tr>
+                        <td>{{rowIndex + 1}}</td>
+                        <td>{{item.articalTypeName}}</td>
+                        <td>{{item.articalRate | currency:'INR' }}</td>
+                        <td>
+                            <div class="actionbutton">
+                                <div class="edit">
+                                    <i class="fa fa-pencil" aria-hidden="true" (click)="editArticalRateInfo(item)"></i>
+                                </div>
+                                <!-- <div class="delete">
+                                    <i class="fa fa-trash" aria-hidden="true" (click)="deletePattern(item)"></i>
+                                </div> -->
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </div>
 </div>
 
-<div class="card flex justify-content-center">
-    <!-- <p-dialog header="{{ 'PATTERN_MASTER.ADD_NEW'  | translate}} " [(visible)]="isPatternVisible" [modal]="true" -->
+<div class="flex justify-content-center">
     <p-dialog [header]="headingName" [(visible)]="isPatternVisible" [modal]="true"
         [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
         <div class="pattern">
@@ -53,21 +88,12 @@
             <label class="patternLabel">{{ 'PATTERN_MASTER.PRICE' | translate}}</label>
             <input type="text" pInputText class="form-control" [(ngModel)]="patternPrice" placeholder="Enter Enter price" (keydown)="inputRestriction($event, 'price')">
         </div>
-
-        <!-- <div class="pattern">
-            <label class="patternLabel">{{ 'PATTERN_MASTER.CATEGORY' | translate}}</label>
-            <p-radioButton name="category" value="Pent" [(ngModel)]="patternCategory" > </p-radioButton>
-            <label for="ingredient1" class="ml-5"> {{ 'PATTERN_MASTER.PENT' | translate}}</label>
-            <p-radioButton name="category" value="Shirt" [(ngModel)]="patternCategory" >  </p-radioButton>
-            <label for="ingredient2" class="ml-5">{{ 'PATTERN_MASTER.SHIRT' | translate}}</label>
-        </div> -->
-
         <div class="d-flex">
             <label>{{ 'PATTERN_MASTER.CATEGORY' | translate}} :</label>
             <div class="flex align-items-center">
-                <p-radioButton class="radioBtn" value="Pent" [(ngModel)]="patternCategory" inputId="type1"></p-radioButton>
+                <p-radioButton class="radioBtn" value="Pant" [(ngModel)]="patternCategory" inputId="type1"></p-radioButton>
                 <label for="type1" class="ml-2 radioLable">
-                    {{ 'PATTERN_MASTER.PENT' | translate}}</label>
+                    {{ 'PATTERN_MASTER.PANT' | translate}}</label>
             </div>
         
             <div class="flex align-items-center">
@@ -82,9 +108,26 @@
                 {{ 'PATTERN_MASTER.SUBMIT' | translate}}
             </button>
         </div>
-        <!-- <div class="submit" [ngStyle]="{'cursor': !isValid() ? 'not-allowed' : 'pointer' }">
-            <p-button (onClick)="patternSubmit()" [disabled]="!isValid()" > {{ 'PATTERN_MASTER.SUBMIT' | translate}}</p-button>
-        </div> -->
+    </p-dialog>
+</div>
+
+<div class="flex justify-content-center">
+    <p-dialog [header]="articalRateName" [(visible)]="isArticalRateVisible" [modal]="true"
+        [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+        <div class="pattern">
+            <label class="patternLabel">Type</label>
+            <input type="text" pInputText class="form-control" [(ngModel)]="articalTypeName" placeholder="Enter Enter price">
+        </div>
+        <div class="pattern">
+            <label class="patternLabel">Rate</label>
+            <input type="number" pInputText class="form-control" [(ngModel)]="articalRate"
+                placeholder="Enter Pattern Name">
+        </div>
+        <div class="submitBtn"> 
+            <button class="submit" [ngClass]="!isArticalRateInfoValid() ? 'disabled' : ''" (click)="articalRateInfoSubmit()" [disabled]="!isArticalRateInfoValid()" >
+                {{ 'PATTERN_MASTER.SUBMIT' | translate}}
+            </button>
+        </div>
     </p-dialog>
 </div>
 

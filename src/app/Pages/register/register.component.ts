@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
 
   error : any
   success : any
+  endData : any
 
   registrationForm!: FormGroup;
   constructor(
@@ -35,6 +36,8 @@ export class RegisterComponent implements OnInit {
         console.log("res==========", res);
       }
     })
+    this.endData = new Date(new Date().setMonth(new Date().getMonth() + 3)).toLocaleDateString('en-GB');
+    console.log(this.endData , "this.endData-----------------");
   }
 
   
@@ -42,6 +45,10 @@ export class RegisterComponent implements OnInit {
     this.registrationForm = this.formBuilder.group({
       email: ['',[ Validators.required, Validators.email]],
       password: ['', Validators.required],
+      mobileNo : [],
+      companyMobile : [],
+      companyName : [],
+      companyAddress : []
     })
   }
 
@@ -53,6 +60,14 @@ export class RegisterComponent implements OnInit {
           const payload: UserList = {
             id: '',
             email: this.registrationForm.value.email,
+            mobileNo: this.registrationForm.value.mobileNo,
+            companyMobile: this.registrationForm.value.companyMobile,
+            companyName: this.registrationForm.value.companyName,
+            companyAddress: this.registrationForm.value.companyAddress,
+            password: this.registrationForm.value.password,
+            status: 'inactive',
+            endDate: this.endData,
+            userRole: 'user'
           }
 
           this.firebaseService.addUserData(payload).then((res: any) => {

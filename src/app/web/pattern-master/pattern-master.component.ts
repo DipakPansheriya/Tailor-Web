@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
-import { Patterns } from 'src/app/interface/AuthResponse';
+import { ArticalRateInfo, Patterns } from 'src/app/interface/AuthResponse';
 import { CustomMessageService } from 'src/app/service/custom-message/custom-message.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { msgType } from 'src/assets/Constant/message-constant';
@@ -13,26 +13,20 @@ import { msgType } from 'src/assets/Constant/message-constant';
 })
 export class PatternMasterComponent implements OnInit {
   isPatternVisible = false;
+  isArticalRateVisible = false;
   patterns: any = [];
   patternPrice: any
   patternName: any
   patternCategory: any;
   patternId : any ;
   headingName = 'Add New Pattern';
+  articalRateName = 'Add New Artical Rate';
   validPricePattern: RegExp = new RegExp(/^\d{0,10}$/g);
   validPatternName: RegExp = new RegExp(/^[a-zA-Z ]*$/g);
-  // private regexPettern: RegExp = new RegExp(/^\d*\.?\d{0,3}$/g);
-  // private regexPettern: RegExp = new RegExp(/^\d{0,10}$/g);
-  // private allowedSpecialKeys: Array<string> = [
-  //   'Backspace',
-  //   'Tab',
-  //   'End',
-  //   'Home',
-  //   'ArrowLeft',
-  //   'ArrowRight',
-  //   'Del',
-  //   'Delete'
-  // ];
+  articalTypeName :any
+  articalRate :any
+  articalRateInfoId :any
+  articalRateInfoData :any
 
   constructor( 
     private fireBaseService: FirebaseService,
@@ -43,14 +37,19 @@ export class PatternMasterComponent implements OnInit {
 
   
   ngOnInit(): void {
-    this.getAllPentPatterns();
+    this.getAllPantPatterns();
   }
   
-  getAllPentPatterns(): void {
+  getAllPantPatterns(): void {
     this.fireBaseService.getAllPatterns().subscribe((res => {
       if (res) {
         this.patterns = res;
-        console.log("patterns=======>", this.patterns);
+      }
+    }))
+
+    this.fireBaseService.getAllArticalRateInfo().subscribe((res => {
+      if (res) {
+        this.articalRateInfoData = res;
       }
     }))
   }
@@ -58,10 +57,17 @@ export class PatternMasterComponent implements OnInit {
   addNewPattern() : void {
     this.isPatternVisible = true;
     this.headingName = this.translate.instant('PATTERN_MASTER.ADD_NEW')
+    this.articalRateName = 'Artical Rate Info'
     this.patternName = ''
     this.patternPrice = ''
     this.patternCategory = ''
     this.patternId = ''
+  }
+  addArticalRate() : void{
+    this.articalTypeName = ''
+    this.articalRate = ''
+    this.isArticalRateVisible = true;
+    
   }
 
   patternSubmit(): void {
@@ -81,6 +87,7 @@ export class PatternMasterComponent implements OnInit {
         this.patternCategory = ''
       })
     } else {
+      debugger
       this.fireBaseService.updatePattern(this.patternId, payload ).then(res => {
         this.messageService.openCustomMessage(msgType.SUCCESS, this.translate.instant('COMMON_MESSAGE.UpdateData') );
         this.isPatternVisible = false;
@@ -91,8 +98,36 @@ export class PatternMasterComponent implements OnInit {
     }
   }
 
+  articalRateInfoSubmit(): void {
+    const payload: ArticalRateInfo = {
+      id: this.articalRateInfoId ? this.articalRateInfoId : '',
+      articalTypeName: this.articalTypeName,
+      articalRate: this.articalRate
+    }
+
+    if (!this.articalRateInfoId) {
+      this.fireBaseService.addArticalRateInfo(payload).then(res => {
+        this.messageService.openCustomMessage(msgType.SUCCESS, this.translate.instant('COMMON_MESSAGE.SubmitData') );
+        this.isArticalRateVisible = false;
+        this.patternName = ''
+        this.patternPrice = ''
+        this.patternCategory = ''
+      })
+    } else {
+      this.fireBaseService.updateArticalRateInfo(this.articalRateInfoId, payload ).then(res => {
+        this.messageService.openCustomMessage(msgType.SUCCESS, this.translate.instant('COMMON_MESSAGE.UpdateData') );
+        this.isArticalRateVisible = false;
+        this.patternName = ''
+        this.patternPrice = ''
+        this.patternCategory = ''
+      })
+    }
+  }
+
+
 
   editPattern(value: any): void {
+    debugger
     this.headingName = this.translate.instant('PATTERN_MASTER.EDIT')
     this.isPatternVisible = true;
     this.patternId = value.id
@@ -101,10 +136,28 @@ export class PatternMasterComponent implements OnInit {
     this.patternCategory = value.patternCategory
   }
 
+  editArticalRateInfo(value: any): void {
+    this.articalRateName = 'Edit Artical Rate';
+    this.isArticalRateVisible = true;
+    this.articalRateInfoId = value.id
+    this.articalTypeName = value.articalTypeName
+    this.articalRate = value.articalRate
+  }
+
   isValid(): boolean {
     let result = false;
     if (this.patternName && this.patternPrice && this.patternCategory
     ) {
+      result = true;
+    } else {
+      result = false;
+    }
+    return result
+  }
+
+  isArticalRateInfoValid(): boolean {
+    let result = false;
+    if (this.articalRateName && this.articalRate) {
       result = true;
     } else {
       result = false;

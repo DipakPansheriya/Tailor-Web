@@ -1,9 +1,3 @@
-.addNewBtn {
-    background-color: #50C2C9;
-    border-radius: 5px;
-    padding: 6px;
-    color: #fff;
-}
 .searchBar {
     display: flex;
     justify-content: space-between;
@@ -16,12 +10,12 @@
 }
 
 .edit {
-    background-color: #b4a9a9;
-    width: 10%;
-    border-radius: 212px;
-    padding: 5px;
-    text-align: center;
-    cursor: pointer;
+        border-radius: 50%;
+        padding: 5px;
+        text-align: center;
+        cursor: pointer;
+        width: 30%;
+        color: #50C2C9;
 }
 
 // .submitBtn {

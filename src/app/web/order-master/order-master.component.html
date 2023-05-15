@@ -1,11 +1,17 @@
 <div class="main-card">
-    <h3> {{'ORDER.ORDERLIST' | translate}}</h3>
-    <p-button data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addOrder()">{{'ORDER.ADD_ORDER_BTN' |
+    <div class="status_order">
+        <div class="toggle-off-on">
+            <p-inputSwitch [(ngModel)]="recodeStaus" (onChange)="recodeStausChange($event)"></p-inputSwitch>
+                <span *ngIf="!recodeStaus">Pending progress</span>
+                <span *ngIf="recodeStaus">Done</span>
+        </div>
+    </div>
+    <p-button styleClass="p-button-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addOrder()">{{'ORDER.ADD_ORDER_BTN' |
         translate}} </p-button>
 </div>
 
 <div class="row">
-    <p-table  #order_table [value]="allOrderList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    <p-table  #order_table [value]="orderListStaus" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[10, 25, 50]" [globalFilterFields]="['customerMobileNo']" dataKey="customerMobileNo">
         <ng-template pTemplate="caption">
@@ -37,16 +43,37 @@
                 <td>{{rowIndex + 1}}</td>
                 <td>{{item.customerName}}</td>
                 <td>{{item.customerMobileNo}}</td>
-                <td>{{item.status}}</td>
+                <td>  <div class="progressStatus"  [ngClass]="{ pending_status: item.status === 'Pending',progress_status: item.status === 'Progress', done_status: item.status === 'Done'}">
+                    <span  class="btn">{{item.status}}</span>
+               </div> </td>
                 <td>{{item.billNumber}}</td>
                 <td>{{item.deliveryDate | date : "dd/MM/YYYY"}}</td>
                 <td>{{item.garmentType === 'Jodi' ? item.quantity : item.garmentType === 'Shirt' ?
-                    item.shirtDetails.quantity : item.pentDetails.quantity }}</td>
+                    item.shirtDetails.quantity : item.pantDetails.quantity }}</td>
                 <td>{{item.garmentType}}</td>
-                <td>
-                    <div class="edit">
-                        <i class="fa fa-pencil" aria-hidden="true" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop" (click)="editOrder(item)"></i>
+                <td style="width: 11%;padding: 0px 15px;">
+                    <div class="action">
+                        <div class="status_button">
+                            <div class="status_progress" *ngIf="item.status === 'Pending'" (click)="statuspending(item)">
+                                <button type="button" class="btn">Progress</button>
+                            </div>
+                            <div class="status_done" *ngIf="item.status === 'Progress'" (click)="statusInProgress(item)">
+                                <button type="button" class="btn">Done</button>
+                            </div>
+                        </div>
+                        <div class="btn-group dropstart">
+                            <button type="button" class="actionIcon" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="pi pi-align-center"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop" (click)="editOrder(item)"><i class="pi pi-user-edit"></i>Edit</a></li>
+                                <li><a class="dropdown-item" (click)="deleteOrder(item)"> <i class="pi pi-trash"></i>Delete</a></li>
+                                <!-- <li><a class="dropdown-item"> <i class="pi pi-check-square"></i>Payment Update</a></li> -->
+                                <li><a class="dropdown-item" data-bs-toggle="modal" (click)="billOrderView(item)"
+                                    data-bs-target="#billingView" > <i class="pi pi-id-card"></i>Bill View </a></li>
+                              </ul>
+                          </div>
                     </div>
                 </td>
             </tr>
@@ -109,10 +136,10 @@
                             </div>
 
                             <div class="flex align-items-center">
-                                <p-radioButton class="radioBtn" value="Pent" formControlName="garmentType"
+                                <p-radioButton class="radioBtn" value="pant" formControlName="garmentType"
                                     inputId="type2"></p-radioButton>
                                 <label for="type2" class="ml-2 radioLable">{{
-                                    'ORDER.ADD_ORDER.PENT' | translate}}</label>
+                                    'ORDER.ADD_ORDER.PANT' | translate}}</label>
                             </div>
 
                             <div class="flex align-items-center">
@@ -123,9 +150,9 @@
                             </div>
                         </div>
 
-                        <!-- ============= Pent =============== -->
+                        <!-- ============= pant =============== -->
 
-                        <div *ngIf="jodiForm.value.garmentType == 'Pent' ">
+                        <div *ngIf="jodiForm.value.garmentType == 'pant' ">
                             <div class="row" style="margin: 20px;">
                                 <div class="col-6">
                                     <div class="card">
@@ -133,25 +160,25 @@
                                             <div class="col-6">
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.L' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.L' | translate}}
                                                     </span>
-                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentL" />
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pantL" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.K' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.K' | translate}}
                                                     </span>
-                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentK" />
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pantK" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.SEE' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.SEE' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="shi" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.MO' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.MO' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="mo" />
                                                 </div>
@@ -159,19 +186,19 @@
                                             <div class="col-6">
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JA' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.JA' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="ja" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JO' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.JO' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="jo" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.GO' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.GO' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="go" />
                                                 </div>
@@ -188,7 +215,7 @@
                                                 <div class="col-6">
                                                     <div class="input">
                                                         <label>{{ 'ORDER.ADD_ORDER.QUANTITY' | translate}} : </label>
-                                                        <input type="text" (keydown)="inputRestriction($event, 'qty')"  pInputText formControlName="pentQuantity">
+                                                        <input type="text" (keydown)="inputRestriction($event, 'qty')"  pInputText formControlName="pantQuantity">
                                                     </div>
                                                 </div>
                                             </div>
@@ -200,10 +227,10 @@
                                     <div class="card">
                                         <div class="multiSelect">
                                             <div class="dropdown">
-                                                <label>{{ 'ORDER.ADD_ORDER.PENT_PATTERN_TYPE' | translate}} : </label>
-                                                <p-multiSelect [options]="pentPatternsList" optionLabel="patternName"
-                                                    formControlName="pentPatterns"
-                                                    (ngModelChange)="jodiPatternSelection('pent')" display="chip">
+                                                <label>{{ 'ORDER.ADD_ORDER.PANT_PATTERN_TYPE' | translate}} : </label>
+                                                <p-multiSelect [options]="pantPatternsList" optionLabel="patternName"
+                                                    formControlName="pantPatterns"
+                                                    (ngModelChange)="jodiPatternSelection('pant')" display="chip">
                                                 </p-multiSelect>
                                             </div>
                                         </div>
@@ -225,7 +252,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr
-                                                            *ngFor="let item of jodiForm.value.pentPatterns; let i = index">
+                                                            *ngFor="let item of jodiForm.value.pantPatterns; let i = index">
                                                             <td>{{i + 1 }}</td>
                                                             <td>{{item.patternName}}</td>
                                                             <td>{{item.patternPrice}} &#8377;</td>
@@ -234,11 +261,11 @@
                                                     <tfoot>
                                                         <tr>
                                                             <td colspan="2">{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} :</td>
-                                                            <td> <b> {{jodiForm.value.pentTotalExtraCost}} &#8377; </b>
+                                                            <td> <b> {{jodiForm.value.pantTotalExtraCost}} &#8377; </b>
                                                             </td>
                                                             <!-- <td></td>
                                                             <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
-                                                                    {{jodiForm.value.pentTotalExtraCost}} &#8377; </b>
+                                                                    {{jodiForm.value.pantTotalExtraCost}} &#8377; </b>
                                                             </span> -->
                                                         </tr>
 
@@ -251,7 +278,7 @@
                                         <div class="measurement">
                                             <label>{{ 'ORDER.ADD_ORDER.DESCRIPTION' | translate}} : </label>
                                             <textarea pInputText cols="30" rows="4"
-                                                formControlName="pentAdditionalDesc"></textarea>
+                                                formControlName="pantAdditionalDesc"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -392,14 +419,28 @@
                                                             <td>{{item.patternName}}</td>
                                                             <td>{{item.patternPrice}} &#8377;</td>
                                                         </tr>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="2">{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} :</td>
+                                                                <td> <b> {{jodiForm.value.shirtTotalExtraCost}} &#8377; </b>
+                                                                </td>
+                                                                <!-- <td></td>
+                                                                <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
+                                                                        {{jodiForm.value.pantTotalExtraCost}} &#8377; </b>
+                                                                </span> -->
+                                                            </tr>
+        
+                                                            <!-- <div style="padding: 10px;"> -->
+                                                            <!-- </div> -->
+                                                        </tfoot>
                                                     </table>
                                                 </div>
-                                                <div style="padding: 10px;">
+                                                <!-- <div style="padding: 10px;">
                                                     <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
                                                             {{jodiForm.value.shirtTotalExtraCost}} &#8377;
                                                         </b>
                                                     </span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="measurement">
@@ -431,25 +472,25 @@
                                             <div class="col-6">
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.L' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.L' | translate}}
                                                     </span>
-                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentL" />
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pantL" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.K' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.K' | translate}}
                                                     </span>
-                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pentK" />
+                                                    <input pInputText (keydown)="inputRestriction($event)"  formControlName="pantK" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.SEE' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.SEE' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="shi" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.MO' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.MO' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="mo" />
                                                 </div>
@@ -457,29 +498,29 @@
                                             <div class="col-6">
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JA' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.JA' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="ja" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.JO' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.JO' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="jo" />
                                                 </div>
                                                 <div class="p-inputgroup m-2">
                                                     <span class="p-inputgroup-addon">
-                                                        {{ 'ORDER.ADD_ORDER.PENT_MEASUREMENT.GO' | translate}}
+                                                        {{ 'ORDER.ADD_ORDER.PANT_MEASUREMENT.GO' | translate}}
                                                     </span>
                                                     <input pInputText (keydown)="inputRestriction($event)"  formControlName="go" />
                                                 </div>
                                                 <div class="multiSelect">
                                                     <div class="dropdown m-2">
-                                                        <label>{{ 'ORDER.ADD_ORDER.PENT_PATTERN_TYPE' | translate}} :
+                                                        <label>{{ 'ORDER.ADD_ORDER.PANT_PATTERN_TYPE' | translate}} :
                                                         </label>
-                                                        <p-multiSelect [options]="pentPatternsList"
-                                                            optionLabel="patternName" formControlName="pentPatterns"
-                                                            (ngModelChange)="jodiPatternSelection('pent')"
+                                                        <p-multiSelect [options]="pantPatternsList"
+                                                            optionLabel="patternName" formControlName="pantPatterns"
+                                                            (ngModelChange)="jodiPatternSelection('pant')"
                                                             display="chip">
                                                         </p-multiSelect>
                                                     </div>
@@ -502,24 +543,38 @@
                                                             </th>
                                                         </tr>
                                                         <tr
-                                                            *ngFor="let item of jodiForm.value.pentPatterns; let i = index">
+                                                            *ngFor="let item of jodiForm.value.pantPatterns; let i = index">
                                                             <td>{{i + 1 }}</td>
                                                             <td>{{item.patternName}}</td>
                                                             <td>{{item.patternPrice}} &#8377;</td>
                                                         </tr>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="2">{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} :</td>
+                                                                <td> <b> {{jodiForm.value.pantTotalExtraCost}} &#8377; </b>
+                                                                </td>
+                                                                <!-- <td></td>
+                                                                <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
+                                                                        {{jodiForm.value.pantTotalExtraCost}} &#8377; </b>
+                                                                </span> -->
+                                                            </tr>
+        
+                                                            <!-- <div style="padding: 10px;"> -->
+                                                            <!-- </div> -->
+                                                        </tfoot>
                                                     </table>
                                                 </div>
-                                                <div style="padding: 10px;">
+                                                <!-- <div style="padding: 10px;">
                                                     <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
-                                                            {{jodiForm.value.pentTotalExtraCost}} &#8377; </b>
+                                                            {{jodiForm.value.pantTotalExtraCost}} &#8377; </b>
                                                     </span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="measurement">
                                             <label>{{ 'ORDER.ADD_ORDER.DESCRIPTION' | translate}} : </label>
                                             <textarea pInputText cols="30" rows="4"
-                                                formControlName="pentAdditionalDesc"></textarea>
+                                                formControlName="pantAdditionalDesc"></textarea>
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
@@ -674,14 +729,28 @@
                                                                 <td>{{item.patternName}}</td>
                                                                 <td>{{item.patternPrice}} &#8377;</td>
                                                             </tr>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="2">{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} :</td>
+                                                                    <td> <b> {{jodiForm.value.shirtTotalExtraCost}} &#8377; </b>
+                                                                    </td>
+                                                                    <!-- <td></td>
+                                                                    <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
+                                                                            {{jodiForm.value.pantTotalExtraCost}} &#8377; </b>
+                                                                    </span> -->
+                                                                </tr>
+            
+                                                                <!-- <div style="padding: 10px;"> -->
+                                                                <!-- </div> -->
+                                                            </tfoot>
                                                         </table>
                                                     </div>
-                                                    <div style="padding: 10px;">
+                                                    <!-- <div style="padding: 10px;">
                                                         <span>{{ 'ORDER.ADD_ORDER.EXTRA_COST' | translate}} : <b>
                                                                 {{jodiForm.value.shirtTotalExtraCost}} &#8377;
                                                             </b>
                                                         </span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                             <div class="measurement">
@@ -706,3 +775,141 @@
         </div>
     </div>
 </div>
+
+  <!-- Bill View Modal -->
+  <div class="modal fade" id="billingView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Customer Bill </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <div class="container px-0">
+                    <div class="row" style="justify-content: center;">
+                        <div style="border-right:1px solid #fff; border-left:1px solid #fff; display: flex; justify-content: center;">
+                            <div id="downloadBill" class="col-12 col-lg-10 InvoiceBorder" style="padding: 20px; border: 1px solid;">
+                                <div class="heder_item" style="border: 1px solid black;">
+                                <div class="mobile" style="display: flex; justify-content: space-between;">
+                                    <span class="mobile_Number" style=" font-size: 17px; margin: 0px 10px; font-weight: 700;">MO : {{userData?.mobileNo}}</span>
+                                    <span class="mobile_Number" style=" font-size: 17px; margin: 0px 10px; font-weight: 700;">શ્રી ગણેશાય નમ:</span>
+                                    <span class="mobile_Number" style=" font-size: 17px; margin: 0px 10px; font-weight: 700;">MO : {{userData?.companyMobile}}</span>
+                                </div>
+                                <div class="chalan-heder" style="display: flex; justify-content: center;">
+                                    <!-- <img src="./logo_3.png" alt="" style=" width: 16%; height: 0%; margin: 25px 0 0 0;"> -->
+                                    <div class="heder-text" style="padding: 15px; text-align: center;">
+                                        <span class="heder-mame" style="font-family: serif; letter-spacing: 1.6px; font-size: 40px; font-weight: 700; color: #000;">{{userData?.companyName}}</span>        
+                                    </div>
+                                </div>
+                                <div class="add"  style="background-color: #000;color: #fff;margin: 4px 5px 0;
+                                border-radius: 10px 10px 0 0;
+                                color: #fff;
+                                font-size: 14px;
+                                font-weight: 700;
+                                padding: 4px 0;">
+                                    <p style="margin: 0;
+                                    text-align: center;">{{userData?.companyAddress}}</p>
+        
+                                </div>
+                            </div>
+                            <table class="table_header" border="1" style="margin-bottom: 10px;">
+                                <tbody>
+                                    <tr>
+                                        <td border="1" class="invoiceDetails" style="width: 55.2%; border-top: none!important; padding: 16px;">
+                                            <div class="chalan-M_S-name" style="display: flex;">
+                                                <span>M/s:</span>
+                                                <p style="    border-bottom: 1px solid #000000;
+                                                width: 100%;
+                                                display: flex;
+                                                margin-left: 41px;
+                                                font-size: 20px;
+                                                font-weight: 600;">{{fullName}}</p>
+                                            </div>
+                                            <div class="chalan-boder" style="display: flex;">
+                                                <span>Mobile:</span>
+                                                <p style="border-bottom: 1px solid #000000;
+                                                width: 100%;
+                                                display: flex;
+                                                margin-left: 10px;
+                                                font-size: 20px;">{{mobileNo}}</p>
+                                            </div>
+                                        </td>
+                                        <td class="ChalanNo_Date" border="1" style="width: 26%; text-align: center; border-top: none; border: solid 0.5px #000000;">
+                                            <div class="row" style="margin: 0;">
+                                                <div class="chalan-date" style="display: flex;">
+                                                    <span>Date:</span>
+                                                    <p
+                                                    style="border-bottom: 1px solid #000000;
+                                                width: 100%;
+                                                display: flex;
+                                                margin-left: 50px;
+                                                font-size: 20px;">{{todayBill | date : "dd/MM/YYYY"}}</p>
+                                                </div>
+                                                <div class="chalan-date" style="display: flex;">
+                                                    <span>BillNo:</span>
+                                                    <p 
+                                                    style="border-bottom: 1px solid #000000;
+                                                width: 100%;
+                                                display: flex;
+                                                margin-left: 41px;
+                                                font-size: 20px;">{{orderData?.billNumber}}</p>
+                                                </div>
+                                                <div class="chalan-date" style="display: flex;">
+                                                    <span>Delivery:</span>
+                                                    <p 
+                                                    style="border-bottom: 1px solid #000000;
+                                                width: 100%;
+                                                display: flex;
+                                                margin-left: 41px;
+                                                font-size: 20px;">{{orderData?.deliveryDate | date : "dd/MM/YYYY"}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="color_dropdown" style="width: 100%!important; ">
+                                <tbody class="tableFixedHeight">
+                                    <tr class="header" style="color: #fff; background-color: #000;">
+                                        <th style="width: 10%; border: 0.5px solid #000000; padding: 8px;">Sr.</th>
+                                        <th style="width: 40%; border: 0.5px solid #000000; padding: 8px;">Particulars</th>
+                                        <th style="width: 30%; border: 0.5px solid #000000; padding: 8px;">Quantity</th>
+                                        <!-- <th style="width: 15%; border: 0.5px solid #000000; padding: 8px;">Rate</th> -->
+                                        <th style="width: 20%; border: 0.5px solid #000000; padding: 8px;">Amount</th>
+                                    </tr>
+                                    <tr class="header" style="border: 1px solid">
+                                        <td style="width: 10%; padding: 8px; border-right: 1px solid;">1</td>
+                                        <td style="width: 40%; padding: 8px; border-right: 1px solid;">{{orderData?.garmentType}}</td>
+                                        <td style="width: 30%; padding: 8px; border-right: 1px solid;">{{quantityType}}</td>
+                                        <!-- <td style="width: 15%; padding: 8px; border-right: 1px solid;">250</td> -->
+                                        <td style="width: 20%; padding: 8px;">{{finalAmount}}</td>
+                                    </tr>   
+                                </tbody>
+                            </table>
+                            <table class="table_data" border="1" style="width: 100%!important;">
+                                <tbody>
+                                    <tr style="border: 0 solid; border-color: inherit;">
+                                        <td style="width: 49.99%; padding: 10px;"></td>
+                                        <td class="borders" style="padding: 10px; border: solid 0.5px #000000;"><b>Net Amount</b></td>
+                                        <td class="borders" style="width: 20.1%; padding: 10px;">
+                                            <b>{{totalAmount}}</b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary" (click)="pint()">Print</button> -->
+          <button type="button" class="btn btn-primary" (click)="shareBill()">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

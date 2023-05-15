@@ -9,7 +9,15 @@ export interface AuthResponse {
 
 export interface UserList { 
     id: string,
-    email:string
+    email:string,
+    password:string,
+    mobileNo: number,
+    companyMobile: number,
+    companyName: string,
+    companyAddress: number,
+    status: string,
+    endDate: boolean,
+    userRole: string,
 }
 export interface CustomerList {
    id : string,
@@ -23,6 +31,11 @@ export interface Patterns {
     patternPrice : number,
     patternCategory : string,
 }
+export interface ArticalRateInfo {
+    id: string,
+    articalTypeName: string,
+    articalRate : number,
+}
 export interface OrderMaster {
 
     id: string
@@ -35,17 +48,17 @@ export interface OrderMaster {
     orderDate: any
     deliveryDate: any
     quantity: number
-    pentDetails : {
-        pentL: string
-        pentK: string
+    pantDetails : {
+        pantL: string
+        pantK: string
         shi: string
         mo: string
         ja: string
         jo: string
         go: string
-        pentPatterns: string
-        pentAdditionalDesc: string
-        pentTotalExtraCost: number
+        pantPatterns: string
+        pantAdditionalDesc: string
+        pantTotalExtraCost: number
         quantity: number
     }
 

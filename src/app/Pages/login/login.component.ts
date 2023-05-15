@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   showPassword:boolean = false
   isAuthenticate:any
   error:any
+  newDate: any = new Date().toLocaleDateString('en-GB')
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,11 +47,18 @@ export class LoginComponent implements OnInit {
       (res) => {
         this.firebaseService.getAllUserList().subscribe((res: any) => {
           if (res) {
-            const setItem = res.find((id: any) => id.email === this.loginForm.value.username).id
-            localStorage.setItem('userId', setItem)
+            const setItem = res.find((id: any) => id.email === this.loginForm.value.username)
+            if(setItem.status === 'active' && this.newDate < setItem.endDate && setItem.userRole === 'user' ){
+              localStorage.setItem('userId', setItem.id)
+              this.router.navigate(['web/dashboard'])
+            } else {
+              this.messageService.openCustomMessage(msgType.ERROR,'Account not activetd')
+            }
+            if(setItem.userRole === 'admin'){
+              // this.router.navigate(['web/dashboard'])
+            }
           }
         })
-        this.router.navigate(['web/dashboard'])
       }, (error) => {
         this.messageService.openCustomMessage(msgType.ERROR, error.error.error.message)
       })
