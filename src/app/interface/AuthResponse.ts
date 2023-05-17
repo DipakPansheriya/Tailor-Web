@@ -16,7 +16,7 @@ export interface UserList {
     companyName: string,
     companyAddress: number,
     status: string,
-    endDate: boolean,
+    endDate: string,
     userRole: string,
 }
 export interface CustomerList {

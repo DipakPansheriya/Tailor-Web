@@ -4,7 +4,8 @@ import { ChangepasswordComponent } from './Pages/changepassword/changepassword.c
 import { ForgotpasswordComponent } from './Pages/forgotpassword/forgotpassword.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegisterComponent } from './Pages/register/register.component';
-// import { AuthGuard } from './auth/auth.guard';
+import { AdminMasterComponent } from './Pages/admin-master/admin-master.component';
+import { AuthGuard } from './auth-gaurd/auth.guard';
 // import { ChangepasswordComponent } from './pages/changepassword/changepassword.component';
 // import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 // import { LoginComponent } from './pages/login/login.component';
@@ -33,13 +34,14 @@ const routes: Routes = [
     path:'changepassword',
     component:ChangepasswordComponent,
   },
-  // {
-  //   path:'**',
-  //   component:LoginComponent
-  // },
+  {
+    path:'adminmaster',
+    component:AdminMasterComponent,
+    // canActivate:[AuthGuard]
+  },
   {
     path: 'web',
-    // canActivate:[AuthGuard],
+    canActivate:[AuthGuard],
     loadChildren: () => import('./web/web.module').then(m => m.WebModule)
   }
 ];

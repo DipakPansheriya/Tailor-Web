@@ -519,7 +519,7 @@ export class OrderMasterComponent implements OnInit {
     html2canvas(section).then((canvas: any) => {
       var link = document.createElement('a');
         link.href = canvas.toDataURL("image/jpg").replace("image/jpg", "image/octet-stream");
-        link.download = `${this.fullName}.jpg`;
+        link.download = `${this.fullName}-${this.orderData.billNumber}-${this.orderData.deliveryDate}.jpg`;
         document.body.appendChild(link);
         link.click();
     });

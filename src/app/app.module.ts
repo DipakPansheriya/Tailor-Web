@@ -17,6 +17,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ForgotpasswordComponent } from './Pages/forgotpassword/forgotpassword.component';
 import { environment } from 'src/environments/environment.prod';
+import { AdminMasterComponent } from './Pages/admin-master/admin-master.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { environment } from 'src/environments/environment.prod';
     RegisterComponent,
     LoginComponent,
     ChangepasswordComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    AdminMasterComponent
   ],
   imports: [
     CommonModule,

@@ -26,7 +26,9 @@
             "DELIVERY_DATE": "Delivery Date",
             "STATUS": "Status",
             "ACTION": "Action",
-            "BILL_NO": "Bill No"
+            "BILL_NO": "Bill No",
+            "PENDING_PROGRESS": "Pending progress",
+            "DONE": "Done"
         },
         "ADD_ORDER": {
             "JODI": "Jodi",
@@ -47,6 +49,8 @@
             "EXTRA_COST": "Total Additional Cost",
             "DELIVERY_DATE": "Delivery Date",
             "QUANTITY" : "Quantity",
+            "PANT_DETAILS" : "Pant Details",
+            "SHIRT_DETAILS" : "Shirt Details",
             "PANT_MEASUREMENT" : {
                 "L": "L.",
                 "K": "K.",
@@ -90,15 +94,25 @@
         }
     },
     "PATTERN_MASTER": {
-        "ADD_NEW": "Add New Pattern",
-        "EDIT": "Update Pattern",
+        "ADD_NEW": "Add New Pattern", 
+        "ADD_NEW_RATE": "Add New Artical Rate", 
+        "EDIT_NEW": "Edit Pattern", 
+        "EDIT_RATE": "EditArtical Rate", 
         "SHIRT": "Shirt",
         "PANT": "Pant",
         "ALL": "All",
         "PATTERN_NAME" : "Pattern Name",
         "PRICE" : "Price",
         "CATEGORY" : "Category",
-        "SUBMIT" : "Submit"
+        "SUBMIT" : "Submit",
+        "ADD_EXTRA_INFO_LIST" :"Add Extra Info List",
+        "ARTICAL_RATE_INFO_LIST" :"Artical Rate Info List",
+        "ADD_ARTICAL" :"+Artical Rate",
+        "Sr_No" :"Sr",
+        "Info" :"Info",
+        "TYPE" :"Type",
+        "ACTION" :"Action",
+        "RATE" :"Rate"
     },
     "CUSTOMER_MASTER" : {
         "FIRSTNAME" : "First Name",
@@ -107,6 +121,7 @@
         "ACTION" : "Action",
         "CUSTOMER_LIST" : "Customer List",
         "ADD_NEW_CUSTOMER" : "Add New Customer",
+        "EDIT_CUSTOMER" : "Edit customers",
         "SUBMIT" : "Submit",
         "UPDATE" : "Update",
         "NOCUSTOMER" : "No customers found!!"

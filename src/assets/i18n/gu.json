@@ -20,6 +20,7 @@
 		"ACTION": "એક્શન",
 		"CUSTOMER_LIST": "ગ્રાહકની યાદી",
 		"ADD_NEW_CUSTOMER": "નવા ગ્રાહકને ઉમેરો",
+		"EDIT_CUSTOMER" : "અપડેટ કરો",
 		"SUBMIT": "સબમિટ કરો",
 		"UPDATE": "સુધારો કરો",
 		"NOCUSTOMER": "કોઈ ગ્રાહકો મળ્યા નથી!!"
@@ -41,7 +42,9 @@
 			"ACTION": "એક્શન",
 			"TYPE": "પ્રકાર",
 			"STATUS": "સ્ટેટસ",
-			"BILL_NO": "બીલ નં"
+			"BILL_NO": "બીલ નં",
+			"PENDING_PROGRESS": "બાકી પ્રગતિ",
+            "DONE": "થઈ ગયું "
 		},
 		"ADD_ORDER": {
 			"JODI": "જોડી",
@@ -51,7 +54,7 @@
 			"CUSTOMER_MOBILE": "મોબાઈલ નંબર",
 			"GARMENT_TYPE": "કપડાનો પ્રકાર",
 			"SEARCH_CUSTOMER": "મોબાઈલ નંબરની મદદથી શોધો",
-			"SEARCH": "શોધ કરો",
+			"SEARCH": "શોધકરો",
 			"PANT_PATTERN_TYPE": "પેન્ટની પેટર્ન પસંદ કરો",
 			"SHIRT_PATTERN_TYPE": "શર્ટની પેટર્ન પસંદ કરો",
 			"ADD_NEW_PATTERN": "નવી પેટર્ન",
@@ -62,6 +65,8 @@
 			"EXTRA_COST": "કુલ વધારાનો ખર્ચ",
 			"DELIVERY_DATE": "ડિલિવરી તારીખ",
 			"QUANTITY": "નંગ",
+			"PANT_DETAILS" : "પેન્ટ વિગતો",
+            "SHIRT_DETAILS" : "શર્ટ વિગતો",
 			"PANT_MEASUREMENT": {
 				"L": "લં.",
 				"K": "ક.",
@@ -81,7 +86,7 @@
 				"K": "ક.",
 				"KH": "ખ.",
 				"SHIRT_BUSHIRT": "બુશર્ટ",
-				"SHIRT_OPEN": "બુશર્ટ",
+				"SHIRT_OPEN": "ખુલ્લા",
 				"SHIRT_TYPE": "બુશર્ટ"
 			},
 			"JODI_MEASUREMENT": {
@@ -106,14 +111,24 @@
 	},
 	"PATTERN_MASTER": {
 		"ADD_NEW": "નવી પેટર્ન ઉમેરો",
-		"EDIT": "Update Pattern",
+		"ADD_NEW_RATE": "નવો આર્ટિકલ રેટ ઉમેરો", 
+        "EDIT_NEW": "અપડેટ પેટર્ન", 
+        "EDIT_RATE": "અપડેટ આર્ટિકલ", 
 		"SHIRT": "શર્ટ",
 		"PANT": "પેન્ટ",
 		"ALL": "બધા",
 		"PATTERN_NAME": "પેટર્નનું નામ",
 		"PRICE": "ભાવ",
 		"CATEGORY": "શ્રેણી",
-		"SUBMIT": "સબમિટ કરો"
+		"SUBMIT": "સબમિટ કરો",
+		"ADD_EXTRA_INFO_LIST" :"વધારાની માહિતી સૂચિ ઉમેરો",
+        "ARTICAL_RATE_INFO_LIST" :"આર્ટિકલ રેટ માહિતી સૂચિ",
+        "ADD_ARTICAL" :"+આર્ટિકલ રેટ",
+        "Sr_No" :"ક્રમ",
+        "Info" :"માહિતી",
+        "TYPE" :"પ્રકાર",
+        "ACTION" :"ક્રિયા",
+        "RATE" :"દર"
 	},
 	"COMMON_MESSAGE": {
 		"loginFdetail": "લૉગિન વિગતો અમાન્ય..",

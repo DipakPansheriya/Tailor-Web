@@ -1,46 +1,30 @@
-
-   <div class="container-fluid g-0">
-   <div class="header-content">
-    <div class="side-nav-button" (click)="singleClicked()">
-        <!-- (singleClick)="singleHandler($event)" (doubledClick)="doubleHandler($event)" -->
-        <!-- <i *ngIf="!Clicked" class="fa fa-arrow-left" aria-hidden="true"></i>
-        <i *ngIf="Clicked" class="fa fa-arrow-right" aria-hidden="true"></i> -->
-        <i *ngIf="Clicked" class="ri-menu-unfold-line"></i>    
-        <i *ngIf="!Clicked" class="ri-menu-fold-line"></i>
-    </div>
-    <div class="logout_language_content">
-        <div class="logout">
-            <i class="fa fa-language nav-item dropdown" id="navbarDropdownMenuLink" data-bs-toggle="dropdown"
-                aria-hidden="true" ></i>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" (click)="languageChange($event.target)" >
-                <a class="dropdown-item" value="en">{{'LANGUAGE.ENGLISH' | translate}}</a>
-                <a class="dropdown-item" value="gu">{{'LANGUAGE.GUJRATI' | translate}}</a>
+<div class="container-fluid g-0">
+    <div class="header-content">
+        <!-- <div class="side-nav-button" (click)="singleClicked()">
+               <i *ngIf="Clicked" class="ri-menu-unfold-line"></i>    
+               <i *ngIf="!Clicked" class="ri-menu-fold-line"></i>
+            </div> -->
+        <h2 style="margin: 0; padding: 5px;">{{companyName}}</h2>
+        <div class="logout_language_content">
+            <div class="logout">
+                <i class="fa fa-language nav-item dropdown" id="navbarDropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-hidden="true"></i>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
+                    (click)="languageChange($event.target)">
+                    <a class="dropdown-item" value="en">{{'LANGUAGE.ENGLISH' | translate}}</a>
+                    <a class="dropdown-item" value="gu">{{'LANGUAGE.GUJRATI' | translate}}</a>
+                </div>
+            </div>
+            <div class="logout">
+                <i class="fa fa-user-circle-o nav-item dropdown" id="navbarDropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-hidden="true"></i>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item">Dashboard</a></li>
+                    <li><a class="dropdown-item">View Profile</a></li>
+                    <li><a class="dropdown-item" (click)="changepassword()">Change Password</a></li>
+                    <li><a class="dropdown-item" (click)="logOut()">Logout</a></li>
+                </ul>
             </div>
         </div>
-        <div class="logout">
-            <i class="fa fa-user-circle-o nav-item dropdown" id="navbarDropdownMenuLink" data-bs-toggle="dropdown"
-                aria-hidden="true"></i>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item">Dashboard</a></li>
-                <li><a class="dropdown-item">View Profile</a></li>
-                <li><a class="dropdown-item" (click)="changepassword()" >Change Password</a></li>
-                <li><a class="dropdown-item" (click)="logOut()">Logout</a></li>
-            </ul>
-        </div>
-
-
-        <!-- <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Dropdown button
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-        </div> -->
-
     </div>
-   </div>
-   </div>
+</div>

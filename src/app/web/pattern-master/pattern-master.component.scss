@@ -60,3 +60,15 @@
     align-items: center;
     padding: 10px;
 }
+.button{
+    border: none;
+    width: auto;
+    padding: 9px;
+    border-radius: 10px;
+    background: linear-gradient(118deg, #3b4d63, #64748b);
+    color: white;
+    margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+}

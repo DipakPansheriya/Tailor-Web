@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { AuthResponse, UserList } from 'src/app/interface/AuthResponse';
 import { AuthService } from 'src/app/service/auth.service';
@@ -33,11 +34,13 @@ export class RegisterComponent implements OnInit {
     this.buildForm()
     this.firebaseService.getAllUserList().subscribe((res: any) => {
       if (res) {
-        console.log("res==========", res);
       }
     })
-    this.endData = new Date(new Date().setMonth(new Date().getMonth() + 3)).toLocaleDateString('en-GB');
-    console.log(this.endData , "this.endData-----------------");
+
+    const currentDate = moment();
+    const newDate = currentDate.add(3, 'months');
+    const formattedDate = newDate.format('YYYY-MM-DD');
+    this.endData = formattedDate;
   }
 
   

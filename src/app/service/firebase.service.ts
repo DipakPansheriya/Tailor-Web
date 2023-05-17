@@ -29,6 +29,11 @@ export class FirebaseService {
     return collectionData(dataRef, { idField: 'id' })
   }
 
+  updateUserData(data: UserList, UserList: any) {
+    let dataRef = doc(this.fService, `UserList/${data}`);
+    return updateDoc(dataRef, UserList)
+  }
+
   // CustomerList
 
   addCustomerData(data: CustomerList) {

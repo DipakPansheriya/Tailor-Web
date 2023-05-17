@@ -1,6 +1,6 @@
 <div class="main-card">
     <h3> {{ 'CUSTOMER_MASTER.CUSTOMER_LIST' | translate}}</h3>
-    <p-button styleClass="p-button-secondary" (click)="addNewCutomer()">+ {{ 'CUSTOMER_MASTER.ADD_NEW_CUSTOMER' | translate}} </p-button>
+    <button class="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addNewCutomer()">+ {{ 'CUSTOMER_MASTER.ADD_NEW_CUSTOMER' | translate}} </button>
 </div>
 
 <div class="row">
@@ -14,7 +14,7 @@
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" id="orderSearch"  (input)="customer_table.filterGlobal($event.target.value, 'contains')"
-                        placeholder="Search by Mo. No." />
+                        placeholder="Search by Mo" />
                 </span>
             </div>
         </ng-template>
@@ -32,7 +32,7 @@
                 <td>{{item.lastName}}</td>
                 <td>{{item.mobileNo}}</td>
                 <td>
-                    <div class="edit" (click)="editCustomer(item)">
+                    <div class="edit" (click)="editCustomer(item)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </div>
                 </td>
@@ -46,8 +46,8 @@
     </p-table>
 </div>
 
-<div class="card flex justify-content-center">
-    <p-dialog [header]="dialogHeader" [(visible)]="isDialogvisible" [style]="{width: '50%'}">
+<!-- <div class="card flex justify-content-center">
+    <p-dialog [(visible)]="isDialogvisible" [style]="{width: '50%'}">
         <div class="row" [formGroup]="customerForm">
             <div class="col-md-4">
                 <label>{{ 'CUSTOMER_MASTER.FIRSTNAME' | translate}} </label><span class="required">*</span>
@@ -70,4 +70,41 @@
 
 
     </p-dialog>
-</div>
+</div> -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel" *ngIf="!isEdit">{{ 'CUSTOMER_MASTER.ADD_NEW_CUSTOMER' | translate}}</h5>
+          <h5 class="modal-title" id="staticBackdropLabel" *ngIf="isEdit">{{ 'CUSTOMER_MASTER.EDIT_CUSTOMER' | translate}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row" [formGroup]="customerForm">
+                <div class="col-md-4">
+                    <label>{{ 'CUSTOMER_MASTER.FIRSTNAME' | translate}} </label><span class="required">*</span>
+                    <input pInputText type="text" class="form-control" formControlName="firstName"  (keydown)="inputRestriction($event, 'name')"/>
+                </div>
+                <div class="col-md-4">
+                    <label>{{ 'CUSTOMER_MASTER.LASTTNAME' | translate}}</label><span class="required">*</span>
+                    <input pInputText type="text" class="form-control" formControlName="lastName"  (keydown)="inputRestriction($event, 'name')"/>
+                </div>
+                <div class="col-md-4">
+                    <label>{{ 'CUSTOMER_MASTER.MOBILE' | translate}}</label><span class="required">*</span>
+                    <input pInputText type="text" class="form-control" formControlName="mobileNo"  minlength="10" maxlength="10" (keydown)="inputRestriction($event, 'mobile')" (keyup.enter)="onSubmit()" />
+                </div>
+            </div>
+            <!-- <div class="submitBtn">
+                <button class="submit" [ngClass]="customerForm.invalid ? 'disabled' : '' " (click)="onSubmit()" [disabled]="customerForm.invalid">
+                    {{submitBtnLable}}
+                </button>
+            </div> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="customerForm.invalid" >{{'ORDER.ADD_ORDER.SUBMIT' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -19,8 +19,6 @@ export class PatternMasterComponent implements OnInit {
   patternName: any
   patternCategory: any;
   patternId : any ;
-  headingName = 'Add New Pattern';
-  articalRateName = 'Add New Artical Rate';
   validPricePattern: RegExp = new RegExp(/^\d{0,10}$/g);
   validPatternName: RegExp = new RegExp(/^[a-zA-Z ]*$/g);
   articalTypeName :any
@@ -55,9 +53,7 @@ export class PatternMasterComponent implements OnInit {
   }
 
   addNewPattern() : void {
-    this.isPatternVisible = true;
-    this.headingName = this.translate.instant('PATTERN_MASTER.ADD_NEW')
-    this.articalRateName = 'Artical Rate Info'
+    this.isPatternVisible = false;
     this.patternName = ''
     this.patternPrice = ''
     this.patternCategory = ''
@@ -66,7 +62,7 @@ export class PatternMasterComponent implements OnInit {
   addArticalRate() : void{
     this.articalTypeName = ''
     this.articalRate = ''
-    this.isArticalRateVisible = true;
+    this.isArticalRateVisible = false;
     
   }
 
@@ -81,16 +77,13 @@ export class PatternMasterComponent implements OnInit {
     if (!this.patternId) {
       this.fireBaseService.addPattern(payload).then(res => {
         this.messageService.openCustomMessage(msgType.SUCCESS, this.translate.instant('COMMON_MESSAGE.SubmitData') );
-        this.isPatternVisible = false;
         this.patternName = ''
         this.patternPrice = ''
         this.patternCategory = ''
       })
     } else {
-      debugger
       this.fireBaseService.updatePattern(this.patternId, payload ).then(res => {
         this.messageService.openCustomMessage(msgType.SUCCESS, this.translate.instant('COMMON_MESSAGE.UpdateData') );
-        this.isPatternVisible = false;
         this.patternName = ''
         this.patternPrice = ''
         this.patternCategory = ''
@@ -108,7 +101,6 @@ export class PatternMasterComponent implements OnInit {
     if (!this.articalRateInfoId) {
       this.fireBaseService.addArticalRateInfo(payload).then(res => {
         this.messageService.openCustomMessage(msgType.SUCCESS, this.translate.instant('COMMON_MESSAGE.SubmitData') );
-        this.isArticalRateVisible = false;
         this.patternName = ''
         this.patternPrice = ''
         this.patternCategory = ''
@@ -116,7 +108,6 @@ export class PatternMasterComponent implements OnInit {
     } else {
       this.fireBaseService.updateArticalRateInfo(this.articalRateInfoId, payload ).then(res => {
         this.messageService.openCustomMessage(msgType.SUCCESS, this.translate.instant('COMMON_MESSAGE.UpdateData') );
-        this.isArticalRateVisible = false;
         this.patternName = ''
         this.patternPrice = ''
         this.patternCategory = ''
@@ -127,8 +118,6 @@ export class PatternMasterComponent implements OnInit {
 
 
   editPattern(value: any): void {
-    debugger
-    this.headingName = this.translate.instant('PATTERN_MASTER.EDIT')
     this.isPatternVisible = true;
     this.patternId = value.id
     this.patternName = value.patternName
@@ -137,7 +126,6 @@ export class PatternMasterComponent implements OnInit {
   }
 
   editArticalRateInfo(value: any): void {
-    this.articalRateName = 'Edit Artical Rate';
     this.isArticalRateVisible = true;
     this.articalRateInfoId = value.id
     this.articalTypeName = value.articalTypeName
@@ -155,15 +143,15 @@ export class PatternMasterComponent implements OnInit {
     return result
   }
 
-  isArticalRateInfoValid(): boolean {
-    let result = false;
-    if (this.articalRateName && this.articalRate) {
-      result = true;
-    } else {
-      result = false;
-    }
-    return result
-  }
+  // isArticalRateInfoValid(): boolean {
+  //   let result = false;
+  //   if (this.articalRateName && this.articalRate) {
+  //     result = true;
+  //   } else {
+  //     result = false;
+  //   }
+  //   return result
+  // }
 
   inputRestriction(event: any, type: any): any {
     if (type === 'price') {
@@ -171,21 +159,6 @@ export class PatternMasterComponent implements OnInit {
     } else {
       this.messageService.inputRestriction(event, this.validPatternName)
     }
-    // const value = event.target.value;
-    // console.log(event.target.value, value);
-    // if (this.allowedSpecialKeys.indexOf(event.key) !== -1) {
-    //   return;
-    // }
-    // const current: string = value;
-    // const position = event.target.selectionStart;
-    // const next: string = [
-    //   current.slice(0, position),
-    //   event.key === 'Decimal' ? '.' : event.key,
-    //   current.slice(position)
-    // ].join('');
-    // if (next && !String(next).match(this.regexPettern)) {
-    //   event.preventDefault();
-    // }
   }
 
   deletePattern(value : any ): void {
