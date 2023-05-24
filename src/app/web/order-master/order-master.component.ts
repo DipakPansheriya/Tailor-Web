@@ -80,7 +80,7 @@ export class OrderMasterComponent implements OnInit {
     
   }
 
-  clear(table: Table) {
+  clear(table: Table): void {
     table.clear();
     const element :any = document.getElementById('orderSearch');
     element.value = ''
@@ -94,7 +94,7 @@ export class OrderMasterComponent implements OnInit {
     this.setOrderData(value)
   }
 
-  setOrderData(value: any) {
+  setOrderData(value: any): void {
     this.searchCustomer = value.customerMobileNo;
     this.fullName = value.customerName
     this.mobileNo = value.customerMobileNo
@@ -133,7 +133,7 @@ export class OrderMasterComponent implements OnInit {
     this.jodiForm.controls['shirtType'].setValue(value?.shirtDetails?.shirtType)
   }
 
-  addOrder() {
+  addOrder(): void {
     this.isEdit = false;
     this.searchCustomer = '';
     this.customerId = ''
@@ -357,7 +357,7 @@ export class OrderMasterComponent implements OnInit {
     });
   }
 
-  inputRestriction(event: any, type? : any ): any {
+  inputRestriction(event: any, type? : any ): void {
     if (type && type === 'qty') {
       this.messageService.inputRestriction(event, this.qtyPattern)
     } else {
@@ -365,7 +365,7 @@ export class OrderMasterComponent implements OnInit {
     }
   }
 
-  statuspending(value :any){
+  statuspending(value :any): void{
     this.orderData = value
     this.orderId = value.id
     this.fullName = value.customerName;
@@ -409,7 +409,7 @@ export class OrderMasterComponent implements OnInit {
   
   }
 
-  statusInProgress(value :any){
+  statusInProgress(value :any): void{
     this.orderData = value
     this.orderId = value.id
     this.fullName = value.customerName;
@@ -453,7 +453,7 @@ export class OrderMasterComponent implements OnInit {
 
   }
 
-  billOrderView(value :any){
+  billOrderView(value :any): void{
     this.orderData = value
     this.orderId = value.id
     this.fullName = value.customerName;
@@ -461,18 +461,18 @@ export class OrderMasterComponent implements OnInit {
     this.customerId = value.customerId;    
     this.todayBill = moment().format('YYYY-MM-DD')
     const articalTypeData = this.articalRateInfoData.find((id:any) => id.articalTypeName.toLowerCase() == this.orderData.garmentType.toLowerCase())
-    if(articalTypeData?.articalTypeName === 'pant'.toLocaleLowerCase()){
+    if(articalTypeData?.articalTypeName.toLocaleLowerCase() === 'pant'.toLocaleLowerCase()){
       this.finalAmount = articalTypeData.articalRate + value.pantDetails.pantTotalExtraCost
       this.quantityType = value.pantDetails.quantity
       this.totalAmount = this.finalAmount * this.quantityType
     }
-    if(articalTypeData?.articalTypeName === 'shirt'.toLocaleLowerCase()){
+    if(articalTypeData?.articalTypeName.toLocaleLowerCase() === 'shirt'.toLocaleLowerCase()){
       this.finalAmount = articalTypeData.articalRate + value.shirtDetails.shirtTotalExtraCost
       this.quantityType = value.shirtDetails.quantity
       this.totalAmount = this.finalAmount * this.quantityType
 
     }
-    if(articalTypeData?.articalTypeName === 'jodi'.toLocaleLowerCase()){
+    if(articalTypeData?.articalTypeName.toLocaleLowerCase() === 'jodi'.toLocaleLowerCase()){
       this.finalAmount = articalTypeData.articalRate + value.pantDetails.pantTotalExtraCost + value.shirtDetails.shirtTotalExtraCost
       this.quantityType = value.quantity
       this.totalAmount = this.finalAmount * this.quantityType
@@ -482,7 +482,7 @@ export class OrderMasterComponent implements OnInit {
     
   }
 
-  getAllArticalRate(){
+  getAllArticalRate(): void{
     this.fireBaseService.getAllArticalRateInfo().subscribe((res => {
       if (res) {
         this.articalRateInfoData = res;
@@ -490,7 +490,7 @@ export class OrderMasterComponent implements OnInit {
     }))
   }
 
-  getUserData(){
+  getUserData(): void{
     this.fireBaseService.getAllUserList().subscribe((res => {
       if (res) {
         this.userData = res.find((id:any) => id.id === localStorage.getItem("userId"))
@@ -498,7 +498,7 @@ export class OrderMasterComponent implements OnInit {
     }))
   }
 
-  recodeStausChange(event :any){
+  recodeStausChange(event :any): void{
     this.recodeStaus = event.checked
     if(this.recodeStaus){      
       this.orderListStaus =  this.allOrderList.filter((id :any) => id.status === "Done" )
@@ -508,13 +508,13 @@ export class OrderMasterComponent implements OnInit {
     }
   }
 
-  deleteOrder(item :any){
+  deleteOrder(item :any): void{
     this.fireBaseService.deleteOrderData(item).then((res:any) => {
     })
     this.getAllOrders()
   }
 
-  shareBill() {
+  downloadBill(): void {
      let section: any = document.querySelector('#downloadBill');
     html2canvas(section).then((canvas: any) => {
       var link = document.createElement('a');
@@ -523,6 +523,19 @@ export class OrderMasterComponent implements OnInit {
         document.body.appendChild(link);
         link.click();
     });
-
+    
   }
-}
+
+  total(){
+    const articalTypeData = this.articalRateInfoData.find((id:any) => id.articalTypeName.toLowerCase() == this.jodiForm.value.garmentType.toLowerCase())
+    let totalAmount = articalTypeData.articalRate ;
+    if(this.jodiForm.value.garmentType === 'jodi'){
+      totalAmount = articalTypeData.articalRate + this.jodiForm.value.pantTotalExtraCost + this.jodiForm.value.shirtTotalExtraCost
+    } else if(this.jodiForm.value.garmentType === 'pant'){
+      totalAmount = articalTypeData.articalRate + this.jodiForm.value.pantTotalExtraCost 
+    } else if(this.jodiForm.value.garmentType === 'shirt'){
+      totalAmount = articalTypeData.articalRate + this.jodiForm.value.shirtTotalExtraCost
+    }
+    return totalAmount
+  }
+}  

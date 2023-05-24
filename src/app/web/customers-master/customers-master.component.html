@@ -13,8 +13,8 @@
                     (click)="clear(customer_table)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" id="orderSearch"  (input)="customer_table.filterGlobal($event.target.value, 'contains')"
-                        placeholder="Search by Mo" />
+                    <input pInputText type="text" id="orderSearch" maxlength="10"  (input)="customer_table.filterGlobal($event.target.value, 'contains')"
+                        placeholder="{{'ORDER.ADD_ORDER.SEARCH_BY_MOBILE_NO' | translate}}" />
                 </span>
             </div>
         </ng-template>
@@ -40,37 +40,11 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">{{ 'CUSTOMER_MASTER.NOCUSTOMER' | translate}}</td>
+                <td colspan="5" style="text-align: center;">{{ 'CUSTOMER_MASTER.NOCUSTOMER' | translate}}</td>
             </tr>
         </ng-template>
     </p-table>
 </div>
-
-<!-- <div class="card flex justify-content-center">
-    <p-dialog [(visible)]="isDialogvisible" [style]="{width: '50%'}">
-        <div class="row" [formGroup]="customerForm">
-            <div class="col-md-4">
-                <label>{{ 'CUSTOMER_MASTER.FIRSTNAME' | translate}} </label><span class="required">*</span>
-                <input pInputText type="text" class="form-control" formControlName="firstName"  (keydown)="inputRestriction($event, 'name')"/>
-            </div>
-            <div class="col-md-4">
-                <label>{{ 'CUSTOMER_MASTER.LASTTNAME' | translate}}</label><span class="required">*</span>
-                <input pInputText type="text" class="form-control" formControlName="lastName"  (keydown)="inputRestriction($event, 'name')"/>
-            </div>
-            <div class="col-md-4">
-                <label>{{ 'CUSTOMER_MASTER.MOBILE' | translate}}</label><span class="required">*</span>
-                <input pInputText type="text" class="form-control" formControlName="mobileNo"  minlength="10" maxlength="10" (keydown)="inputRestriction($event, 'mobile')" (keyup.enter)="onSubmit()" />
-            </div>
-        </div>
-        <div class="submitBtn">
-            <button class="submit" [ngClass]="customerForm.invalid ? 'disabled' : '' " (click)="onSubmit()" [disabled]="customerForm.invalid">
-                {{submitBtnLable}}
-            </button>
-        </div>
-
-
-    </p-dialog>
-</div> -->
 
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -84,26 +58,21 @@
         <div class="modal-body">
             <div class="row" [formGroup]="customerForm">
                 <div class="col-md-4">
-                    <label>{{ 'CUSTOMER_MASTER.FIRSTNAME' | translate}} </label><span class="required">*</span>
+                    <label>{{ 'CUSTOMER_MASTER.FIRSTNAME' | translate}} </label>
                     <input pInputText type="text" class="form-control" formControlName="firstName"  (keydown)="inputRestriction($event, 'name')"/>
                 </div>
                 <div class="col-md-4">
-                    <label>{{ 'CUSTOMER_MASTER.LASTTNAME' | translate}}</label><span class="required">*</span>
+                    <label>{{ 'CUSTOMER_MASTER.LASTTNAME' | translate}}</label>
                     <input pInputText type="text" class="form-control" formControlName="lastName"  (keydown)="inputRestriction($event, 'name')"/>
                 </div>
                 <div class="col-md-4">
-                    <label>{{ 'CUSTOMER_MASTER.MOBILE' | translate}}</label><span class="required">*</span>
+                    <label>{{ 'CUSTOMER_MASTER.MOBILE' | translate}}</label>
                     <input pInputText type="text" class="form-control" formControlName="mobileNo"  minlength="10" maxlength="10" (keydown)="inputRestriction($event, 'mobile')" (keyup.enter)="onSubmit()" />
                 </div>
             </div>
-            <!-- <div class="submitBtn">
-                <button class="submit" [ngClass]="customerForm.invalid ? 'disabled' : '' " (click)="onSubmit()" [disabled]="customerForm.invalid">
-                    {{submitBtnLable}}
-                </button>
-            </div> -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="customerForm.invalid" >{{'ORDER.ADD_ORDER.SUBMIT' | translate}}</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onSubmit()" >{{'ORDER.ADD_ORDER.SUBMIT' | translate}}</button>
         </div>
       </div>
     </div>

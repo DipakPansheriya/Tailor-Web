@@ -94,8 +94,9 @@ export class CustomersMasterComponent implements OnInit {
   }
 
   addNewCutomer() {
-    this.customerForm.reset()
     this.isEdit = false
+    this.customerId = ''
+    this.customerForm.reset()
   }
 
   onSubmit(): void {

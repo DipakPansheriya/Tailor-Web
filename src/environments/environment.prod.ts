@@ -1,24 +1,23 @@
 export const baseURL = "https://identitytoolkit.googleapis.com/v1/accounts:";
-export const APIKey = "key=AIzaSyDAtXwI6GLP7h2GSOyWXhyeekh4uqaVfjw";
+// export const APIKey = "key=AIzaSyDZRn9bJmR_Y71Jt3c7YCyfvhNRi32oxe8";
 
 export const environment = {
   production: true,
 
 
   firebaseConfig: {
-    apiKey: "AIzaSyDAtXwI6GLP7h2GSOyWXhyeekh4uqaVfjw",
-    authDomain: "ionic-tailorapp.firebaseapp.com",
-    projectId: "ionic-tailorapp",
-    storageBucket: "ionic-tailorapp.appspot.com",
-    messagingSenderId: "1007527390320",
-    appId: "1:1007527390320:web:3a790ee3c22a618d8e58b5",
-    measurementId: "G-CTHM34YXMF"
+    apiKey: "AIzaSyDZRn9bJmR_Y71Jt3c7YCyfvhNRi32oxe8",
+    authDomain: "tailor-221e7.firebaseapp.com",
+    projectId: "tailor-221e7",
+    storageBucket: "tailor-221e7.appspot.com",
+    messagingSenderId: "404320593704",
+    appId: "1:404320593704:web:bbee5fefa9f8772c76121d"
   },
 
   // API URLs Started ========
-  signIn: `${baseURL}signInWithPassword?${APIKey}`,
-  signUp: `${baseURL}signUp?${APIKey}`,
-  forgetPassword: `${baseURL}sendOobCode?${APIKey}`,
-  changePassword: `${baseURL}update?${APIKey}`,
+  signIn: `${baseURL}signInWithPassword?key=`,
+  signUp: `${baseURL}signUp?key=`,
+  forgetPassword: `${baseURL}sendOobCode?key=`,
+  changePassword: `${baseURL}update?key=`,
 
 };

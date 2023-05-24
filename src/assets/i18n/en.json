@@ -51,6 +51,13 @@
             "QUANTITY" : "Quantity",
             "PANT_DETAILS" : "Pant Details",
             "SHIRT_DETAILS" : "Shirt Details",
+            "TOTAL_AMOUNT" : "Total Amount",
+            "EDIT":"Edit",
+            "DELETE":"Delete",
+            "VIEWBILL":"View Bill",
+            "CUSTOMER_BILL":"Customer Bill",
+            "DOWNLOAD":"Download",
+            "SEARCH_BY_MOBILE_NO":"Search By Mobile No",
             "PANT_MEASUREMENT" : {
                 "L": "L.",
                 "K": "K.",

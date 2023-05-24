@@ -78,6 +78,7 @@ export class RegisterComponent implements OnInit {
 
             }
           })
+        this.router.navigate(['/login'])
         },
         err => {
           this.messageService.openCustomMessage(msgType.ERROR, err.error.error.message)

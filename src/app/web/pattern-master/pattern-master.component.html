@@ -89,16 +89,15 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="pattern">
+            <div class="pattern m-2">
                 <label class="patternLabel">{{ 'PATTERN_MASTER.PATTERN_NAME' | translate}}</label>
-                <input type="text" pInputText class="form-control" [(ngModel)]="patternName"
-                    placeholder="Enter Pattern Name"  (keydown)="inputRestriction($event, 'name')">
+                <input type="text" pInputText class="form-control" [(ngModel)]="patternName" (keydown)="inputRestriction($event, 'name')">
             </div>
-            <div class="pattern">
+            <div class="pattern m-2">
                 <label class="patternLabel">{{ 'PATTERN_MASTER.PRICE' | translate}}</label>
-                <input type="text" pInputText class="form-control" [(ngModel)]="patternPrice" placeholder="Enter Enter price" (keydown)="inputRestriction($event, 'price')">
+                <input type="text" pInputText class="form-control" [(ngModel)]="patternPrice" (keydown)="inputRestriction($event, 'price')">
             </div>
-            <div class="d-flex">
+            <div class="d-flex m-2">
                 <label>{{ 'PATTERN_MASTER.CATEGORY' | translate}} :</label>
                 <div class="flex align-items-center">
                     <p-radioButton class="radioBtn" value="Pant" [(ngModel)]="patternCategory" inputId="type1"></p-radioButton>
@@ -114,7 +113,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="patternSubmit()">{{ 'PATTERN_MASTER.SUBMIT' | translate}}</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="patternSubmit()">{{ 'PATTERN_MASTER.SUBMIT' | translate}}</button>
         </div>
       </div>
     </div>
@@ -130,17 +129,17 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="pattern">
+            <div class="pattern m-2">
                 <label class="patternLabel">{{ 'PATTERN_MASTER.TYPE' | translate}}</label>
                 <input type="text" pInputText class="form-control" [(ngModel)]="articalTypeName">
             </div>
-            <div class="pattern">
+            <div class="pattern m-2">
                 <label class="patternLabel">{{ 'PATTERN_MASTER.RATE' | translate}}</label>
                 <input type="number" pInputText class="form-control" [(ngModel)]="articalRate">
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="articalRateInfoSubmit()" [disabled]="!articalRate || !articalTypeName">{{ 'PATTERN_MASTER.SUBMIT' | translate}}</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="articalRateInfoSubmit()" [disabled]="!articalRate || !articalTypeName">{{ 'PATTERN_MASTER.SUBMIT' | translate}}</button>
         </div>
       </div>
     </div>

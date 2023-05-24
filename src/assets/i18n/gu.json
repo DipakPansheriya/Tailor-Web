@@ -44,7 +44,7 @@
 			"STATUS": "સ્ટેટસ",
 			"BILL_NO": "બીલ નં",
 			"PENDING_PROGRESS": "બાકી પ્રગતિ",
-            "DONE": "થઈ ગયું "
+            "DONE": "થઈ ગયા"
 		},
 		"ADD_ORDER": {
 			"JODI": "જોડી",
@@ -67,6 +67,13 @@
 			"QUANTITY": "નંગ",
 			"PANT_DETAILS" : "પેન્ટ વિગતો",
             "SHIRT_DETAILS" : "શર્ટ વિગતો",
+			"TOTAL_AMOUNT" : "કુલ રકમ",
+			"EDIT":"ફેરફાર કરો",
+            "DELETE":"કાઢી નાખો",
+            "VIEWBILL":"બિલ જુઓ",
+			"CUSTOMER_BILL":"ગ્રાહક બિલ",
+			"DOWNLOAD":"ડાઉનલોડ કરો",
+            "SEARCH_BY_MOBILE_NO":"મોબાઈલ નંબર દ્વારા શોધો",
 			"PANT_MEASUREMENT": {
 				"L": "લં.",
 				"K": "ક.",

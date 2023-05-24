@@ -45,26 +45,10 @@ export class ThmHeaderComponent implements OnInit {
     })
   }
 
-  singleClicked(){
-    if(this.menuStatus){
-      this.menuStatus= false
-      this.Clicked = true
-      this.sideNavToggled.emit(this.menuStatus)
-    }else{
-      this.menuStatus = true
-      this.Clicked = false
-      this.sideNavToggled.emit(this.menuStatus)
-    }
-  }
-
   logOut(){
     this.authService.signOut();
     localStorage.clear()
-  }
-  changepassword(){
-    this.router.navigate(['/changepassword'])
-  }
-  
+  }  
 
   languageChange(event:any){
     this.translate.use(event.attributes.value.value)

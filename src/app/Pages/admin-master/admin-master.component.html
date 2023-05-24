@@ -20,7 +20,7 @@
             <tr>
                 <td>{{item.companyName}}</td>
                 <td>{{item.email}}</td>
-                <td>{{item.endDate}}</td>
+                <td>{{item.endDate | date:"dd-MM-yyyy"}}</td>
                 <td>{{item.status}}</td>
                 <td>
                     <div class="edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="editUserData(item)">
@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="submitUser()">Submit</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="submitUser()">Submit</button>
         </div>
       </div>
     </div>

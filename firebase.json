@@ -4,7 +4,8 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/tailor-mate",
+    "target":"tr",
+    "public": "dist/tailors",
     "ignore": [
       "firebase.json",
       "**/.*",

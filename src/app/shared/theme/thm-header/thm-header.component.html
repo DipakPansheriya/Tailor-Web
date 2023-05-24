@@ -11,18 +11,15 @@
                     aria-hidden="true"></i>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
                     (click)="languageChange($event.target)">
-                    <a class="dropdown-item" value="en">{{'LANGUAGE.ENGLISH' | translate}}</a>
-                    <a class="dropdown-item" value="gu">{{'LANGUAGE.GUJRATI' | translate}}</a>
+                    <a class="dropdown-item" value="en">English</a>
+                    <a class="dropdown-item" value="gu">Gujrati</a>
                 </div>
             </div>
             <div class="logout">
                 <i class="fa fa-user-circle-o nav-item dropdown" id="navbarDropdownMenuLink" data-bs-toggle="dropdown"
                     aria-hidden="true"></i>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item">Dashboard</a></li>
-                    <li><a class="dropdown-item">View Profile</a></li>
-                    <li><a class="dropdown-item" (click)="changepassword()">Change Password</a></li>
-                    <li><a class="dropdown-item" (click)="logOut()">Logout</a></li>
+                    <li><a class="dropdown-item" (click)="logOut()">{{'MENUBAR.Logout' | translate}}</a></li>
                 </ul>
             </div>
         </div>

@@ -7,10 +7,10 @@
             <div *ngIf="success" class="alert alert-success" role="alert">
                 <strong>An Success:</strong> {{success}}
               </div>
-            <form action="" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-                <div class="logo">
+            <form action="" [formGroup]="registrationForm">
+                <!-- <div class="logo">
                     <img src="../../../assets/img/logo-03.svg" />
-                </div>
+                </div> -->
                 <div class="login-text">
                    <h4>Create New Account</h4>
                 </div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-12 mt-3">
                             <div class="companyAddress">
-                                <input type="text" placeholder="Email company Address"  formControlName="companyAddress" class="form-control" >
+                                <input type="text" placeholder="Company Address"  formControlName="companyAddress" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-12 mt-3">
@@ -47,13 +47,13 @@
                         </div>
                         <div class="col-md-12 mt-3">
                             <div class="password">
-                                <input type="password" placeholder="Password"  formControlName="password" class="form-control" >
+                                <input type="password" placeholder="Password"  formControlName="password" class="form-control" (keyup.enter)="onSubmit()" >
                             </div>
                         </div>
                     </div>
                 </div>
     
-                <button [disabled]="registrationForm.invalid">SignUp</button>
+                <button (ngSubmit)="onSubmit()" [disabled]="registrationForm.invalid">SignUp</button>
                 <div class="register">
                     <span>All ready have an account? <h3 (click)="navigateToLogin()">Goto Login </h3></span>
                 </div>

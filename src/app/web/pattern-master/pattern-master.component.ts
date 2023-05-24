@@ -59,6 +59,7 @@ export class PatternMasterComponent implements OnInit {
     this.patternCategory = ''
     this.patternId = ''
   }
+  
   addArticalRate() : void{
     this.articalTypeName = ''
     this.articalRate = ''
@@ -115,8 +116,6 @@ export class PatternMasterComponent implements OnInit {
     }
   }
 
-
-
   editPattern(value: any): void {
     this.isPatternVisible = true;
     this.patternId = value.id
@@ -142,16 +141,6 @@ export class PatternMasterComponent implements OnInit {
     }
     return result
   }
-
-  // isArticalRateInfoValid(): boolean {
-  //   let result = false;
-  //   if (this.articalRateName && this.articalRate) {
-  //     result = true;
-  //   } else {
-  //     result = false;
-  //   }
-  //   return result
-  // }
 
   inputRestriction(event: any, type: any): any {
     if (type === 'price') {
