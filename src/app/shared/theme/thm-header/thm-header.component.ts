@@ -33,7 +33,7 @@ export class ThmHeaderComponent implements OnInit {
     private authService: AuthService,
     private firebaseService: FirebaseService
   ) { 
-    translate.setDefaultLang('en')
+    translate.setDefaultLang('gu')
     
   }
   ngOnInit(): void {
