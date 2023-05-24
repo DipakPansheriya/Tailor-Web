@@ -3,12 +3,13 @@ app-thm-header {
     width: calc(100% - 47px);
     top: 0;
     left: 47px;
-    height: 4rem;
+    height: 3rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     z-index: 2;
     background: #fff;
     // transition: left 450ms linear;
     transition: left 450ms linear, width 450ms linear;
-    border-bottom: 1px solid #e8e8ed;
+    // border-bottom: 1px solid #e8e8ed;
 }
 
 .theam-header-open{

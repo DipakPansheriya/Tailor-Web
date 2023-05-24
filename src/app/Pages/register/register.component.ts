@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { AuthResponse, UserList } from 'src/app/interface/AuthResponse';
 import { AuthService } from 'src/app/service/auth.service';
@@ -17,6 +18,7 @@ export class RegisterComponent implements OnInit {
 
   error : any
   success : any
+  endData : any
 
   registrationForm!: FormGroup;
   constructor(
@@ -32,9 +34,13 @@ export class RegisterComponent implements OnInit {
     this.buildForm()
     this.firebaseService.getAllUserList().subscribe((res: any) => {
       if (res) {
-        console.log("res==========", res);
       }
     })
+
+    const currentDate = moment();
+    const newDate = currentDate.add(3, 'months');
+    const formattedDate = newDate.format('YYYY-MM-DD');
+    this.endData = formattedDate;
   }
 
   
@@ -42,6 +48,10 @@ export class RegisterComponent implements OnInit {
     this.registrationForm = this.formBuilder.group({
       email: ['',[ Validators.required, Validators.email]],
       password: ['', Validators.required],
+      mobileNo : [],
+      companyMobile : [],
+      companyName : [],
+      companyAddress : []
     })
   }
 
@@ -53,6 +63,14 @@ export class RegisterComponent implements OnInit {
           const payload: UserList = {
             id: '',
             email: this.registrationForm.value.email,
+            mobileNo: this.registrationForm.value.mobileNo,
+            companyMobile: this.registrationForm.value.companyMobile,
+            companyName: this.registrationForm.value.companyName,
+            companyAddress: this.registrationForm.value.companyAddress,
+            password: this.registrationForm.value.password,
+            status: 'inactive',
+            endDate: this.endData,
+            userRole: 'user'
           }
 
           this.firebaseService.addUserData(payload).then((res: any) => {
@@ -60,6 +78,7 @@ export class RegisterComponent implements OnInit {
 
             }
           })
+        this.router.navigate(['/login'])
         },
         err => {
           this.messageService.openCustomMessage(msgType.ERROR, err.error.error.message)

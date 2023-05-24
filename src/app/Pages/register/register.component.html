@@ -7,29 +7,53 @@
             <div *ngIf="success" class="alert alert-success" role="alert">
                 <strong>An Success:</strong> {{success}}
               </div>
-            <form action="" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-                <div class="logo">
+            <form action="" [formGroup]="registrationForm">
+                <!-- <div class="logo">
                     <img src="../../../assets/img/logo-03.svg" />
-                </div>
+                </div> -->
                 <div class="login-text">
                    <h4>Create New Account</h4>
                 </div>
                 <div class="input-field">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-6">
+                            <div>
+                                <div class="mobileNo">
+                                    <input type="text" placeholder="MobileNo"  formControlName="mobileNo" maxlength="10" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div>
+                                <div class="mobileNo">
+                                    <input type="text" placeholder="CompanyMobileNo"  formControlName="companyMobile" maxlength="10" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="companyName">
+                                <input type="text" placeholder="CompanyName"  formControlName="companyName" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="companyAddress">
+                                <input type="text" placeholder="Company Address"  formControlName="companyAddress" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
                             <div class="email">
-                                <input type="email" placeholder="Email Address"  formControlName="email" class="form-control" aria-describedby="passwordHelpInline">
+                                <input type="email" placeholder="Email Address"  formControlName="email" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-12 mt-3">
                             <div class="password">
-                                <input type="password" placeholder="Password"  formControlName="password" class="form-control" aria-describedby="passwordHelpInline">
+                                <input type="password" placeholder="Password"  formControlName="password" class="form-control" (keyup.enter)="onSubmit()" >
                             </div>
                         </div>
                     </div>
                 </div>
     
-                <button [disabled]="registrationForm.invalid">SignUp</button>
+                <button (ngSubmit)="onSubmit()" [disabled]="registrationForm.invalid">SignUp</button>
                 <div class="register">
                     <span>All ready have an account? <h3 (click)="navigateToLogin()">Goto Login </h3></span>
                 </div>

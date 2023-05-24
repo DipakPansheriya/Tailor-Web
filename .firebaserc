@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "ionic-tailorapp"
+    "default": "tailor-221e7"
+  },
+  "targets": {
+    "tailor-221e7": {
+      "hosting": {
+        "tr": [
+          "tailors"
+        ]
+      }
+    }
   }
 }

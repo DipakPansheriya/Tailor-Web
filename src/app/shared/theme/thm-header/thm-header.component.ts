@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/service/auth.service';
+import { FirebaseService } from 'src/app/service/firebase.service';
 
 @Component({
   selector: 'app-thm-header',
@@ -16,6 +17,7 @@ export class ThmHeaderComponent implements OnInit {
   menuStatus: boolean = false
   menuStatusClose: boolean = true
   Clicked: boolean = true
+  companyName :any
   
   language = [
     {value : 'en'},
@@ -28,78 +30,25 @@ export class ThmHeaderComponent implements OnInit {
     // private firebaseService: FirebaseService,
     private router: Router,
     private translate: TranslateService,
-    private authService: AuthService
+    private authService: AuthService,
+    private firebaseService: FirebaseService
   ) { 
     translate.setDefaultLang('en')
     
   }
-
-  //  this one use for a handle click and double click on one icon
-
-  // @Output() singleClick = new EventEmitter();
-  // @Output() doubledClick = new EventEmitter();
-
-  // timer:any
-  // stopClick:boolean = false
-
-  // @HostListener('click', ['$event']) onClick(e: any) {
-  //   this.timer = 0
-  //   this.stopClick = false;
-
-  //   this.timer = setTimeout(() => {
-  //     if (!this.stopClick) {
-  //       this.menuStatus = !this.menuStatus
-  //       this.sideNavToggled.emit(this.menuStatus)
-  //     }
-  //   }, 200);
-  // }
-
-  // @HostListener('dblclick', ['$event']) onDbClick(e: any) {
-  //   this.stopClick = true;
-  //   clearTimeout(this.timer)
-  //   this.menuStatusClose = !this.menuStatusClose
-  //   this.sideNavToggledClosed.emit(this.menuStatusClose)
-  // }
-
   ngOnInit(): void {
-
+    this.firebaseService.getAllUserList().subscribe((res:any) =>{
+      if(res){
+        const userId = localStorage.getItem("userId")
+        this.companyName = res.find((id:any) => id.id === userId).companyName       
+      }
+    })
   }
-
-  singleClicked(){
-    if(this.menuStatus){
-      this.menuStatus= false
-      this.Clicked = true
-      this.sideNavToggled.emit(this.menuStatus)
-    }else{
-      this.menuStatus = true
-      this.Clicked = false
-      this.sideNavToggled.emit(this.menuStatus)
-    }
-  }
-
-  // singleHandler(event:any){
-  //   console.log('in Single clicked' , event);
-  // }
-
-  // doubleHandler(event:any){
-  //   console.log('in Doubled clicked' , event);
-  // }
-
-  // logOut(): void{
-  //   localStorage.clear();
-  //   this.firebaseService.logout().subscribe(()=>{
-  //     this.router.navigate(['/login'])
-  //   })
-  // }
 
   logOut(){
     this.authService.signOut();
     localStorage.clear()
-  }
-  changepassword(){
-    this.router.navigate(['/changepassword'])
-  }
-  
+  }  
 
   languageChange(event:any){
     this.translate.use(event.attributes.value.value)

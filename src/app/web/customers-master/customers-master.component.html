@@ -1,6 +1,6 @@
 <div class="main-card">
-    <h3> Customer List</h3>
-    <button class="btn btn-primary addNewBtn" (click)="addNewCutomer()">+ Add New Customer </button>
+    <h3> {{ 'CUSTOMER_MASTER.CUSTOMER_LIST' | translate}}</h3>
+    <button class="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addNewCutomer()">+ {{ 'CUSTOMER_MASTER.ADD_NEW_CUSTOMER' | translate}} </button>
 </div>
 
 <div class="row">
@@ -13,17 +13,17 @@
                     (click)="clear(customer_table)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" id="orderSearch"  (input)="customer_table.filterGlobal($event.target.value, 'contains')"
-                        placeholder="Search by Mo. No." />
+                    <input pInputText type="text" id="orderSearch" maxlength="10"  (input)="customer_table.filterGlobal($event.target.value, 'contains')"
+                        placeholder="{{'ORDER.ADD_ORDER.SEARCH_BY_MOBILE_NO' | translate}}" />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th>First Name </th>
-                <th>Last Name </th>
-                <th>Mobile No.</th>
-                <th>Action</th>
+                <th>{{ 'CUSTOMER_MASTER.FIRSTNAME' | translate}}</th>
+                <th>{{ 'CUSTOMER_MASTER.LASTTNAME' | translate}} </th>
+                <th>{{ 'CUSTOMER_MASTER.MOBILE' | translate}}</th>
+                <th>{{ 'CUSTOMER_MASTER.ACTION' | translate}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item let-columns="columns">
@@ -32,7 +32,7 @@
                 <td>{{item.lastName}}</td>
                 <td>{{item.mobileNo}}</td>
                 <td>
-                    <div class="edit" (click)="editCustomer(item)">
+                    <div class="edit" (click)="editCustomer(item)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </div>
                 </td>
@@ -40,38 +40,40 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">No customers found.</td>
+                <td colspan="5" style="text-align: center;">{{ 'CUSTOMER_MASTER.NOCUSTOMER' | translate}}</td>
             </tr>
         </ng-template>
     </p-table>
 </div>
 
-<div class="card flex justify-content-center">
-    <p-dialog [header]="dialogHeader" [(visible)]="isDialogvisible" [style]="{width: '50%'}">
-        <div class="row" [formGroup]="customerForm">
-            <div class="col-md-4">
-                <label>First Name</label><span class="required">*</span>
-                <input pInputText type="text" class="form-control" formControlName="firstName"  (keydown)="inputRestriction($event, 'name')"/>
-            </div>
-            <div class="col-md-4">
-                <label>Last Name</label><span class="required">*</span>
-                <input pInputText type="text" class="form-control" formControlName="lastName"  (keydown)="inputRestriction($event, 'name')"/>
-            </div>
-            <div class="col-md-4">
-                <label>Mobile No.</label><span class="required">*</span>
-                <input pInputText type="text" class="form-control" formControlName="mobileNo"  minlength="10" maxlength="10" (keydown)="inputRestriction($event, 'mobile')" (keyup.enter)="onSubmit()" />
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel" *ngIf="!isEdit">{{ 'CUSTOMER_MASTER.ADD_NEW_CUSTOMER' | translate}}</h5>
+          <h5 class="modal-title" id="staticBackdropLabel" *ngIf="isEdit">{{ 'CUSTOMER_MASTER.EDIT_CUSTOMER' | translate}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row" [formGroup]="customerForm">
+                <div class="col-md-4">
+                    <label>{{ 'CUSTOMER_MASTER.FIRSTNAME' | translate}} </label>
+                    <input pInputText type="text" class="form-control" formControlName="firstName"  (keydown)="inputRestriction($event, 'name')"/>
+                </div>
+                <div class="col-md-4">
+                    <label>{{ 'CUSTOMER_MASTER.LASTTNAME' | translate}}</label>
+                    <input pInputText type="text" class="form-control" formControlName="lastName"  (keydown)="inputRestriction($event, 'name')"/>
+                </div>
+                <div class="col-md-4">
+                    <label>{{ 'CUSTOMER_MASTER.MOBILE' | translate}}</label>
+                    <input pInputText type="text" class="form-control" formControlName="mobileNo"  minlength="10" maxlength="10" (keydown)="inputRestriction($event, 'mobile')" (keyup.enter)="onSubmit()" />
+                </div>
             </div>
         </div>
-        <!-- <div class="submitBtn_main">
-            <button class="btn btn-primary submitBtn" [ngClass]="customerForm.invalid ? 'disabled' : '' " (click)="onSubmit()" [disabled]="customerForm.invalid"> {{submitBtnLable}} </button>
-        </div> -->
-
-        <div class="submitBtn">
-            <button class="submit" [ngClass]="customerForm.invalid ? 'disabled' : '' " (click)="onSubmit()" [disabled]="customerForm.invalid">
-                {{submitBtnLable}}
-            </button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onSubmit()" >{{'ORDER.ADD_ORDER.SUBMIT' | translate}}</button>
         </div>
-
-
-    </p-dialog>
-</div>
+      </div>
+    </div>
+  </div>

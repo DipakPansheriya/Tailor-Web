@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import * as moment from 'moment';
 import { AuthService } from 'src/app/service/auth.service';
 import { CustomMessageService } from 'src/app/service/custom-message/custom-message.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   showPassword:boolean = false
   isAuthenticate:any
   error:any
+  userList:any
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +33,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm()
     this.isAuthenticate =  sessionStorage.getItem('isAuthenticate')
+    this.firebaseService.getAllUserList().subscribe((res: any) => {
+      this.userList = res
+    })
   }
 
   buildForm():void{
@@ -41,15 +46,22 @@ export class LoginComponent implements OnInit {
   }
 
   submit() : void {
-    this.authService.signIn(this.loginForm.value.username, this.loginForm.value.password).subscribe(
-      (res) => {
-        this.firebaseService.getAllUserList().subscribe((res: any) => {
-          if (res) {
-            const setItem = res.find((id: any) => id.email === this.loginForm.value.username).id
-            localStorage.setItem('userId',setItem)
+    this.authService.signIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((res) => {
+        if(res){
+          const setItem = this.userList.find((id: any) => id.email === this.loginForm.value.username)
+          const date1 = moment(setItem.endDate);
+          const date2 = moment();
+          // else if (date1.isSame(date2)) {
+          // }
+          if(date2.isBefore(date1) && setItem.status === 'active' && setItem.userRole === 'user' ){
+            localStorage.setItem('userId', setItem.id)
+            this.router.navigate(['web/dashboard'])
+          } else if(setItem.userRole === 'admin'){
+            this.router.navigate(['adminmaster'])
+          } else {
+            this.messageService.openCustomMessage(msgType.ERROR,'Account not activetd')
           }
-        })
-        this.router.navigate(['web/dashboard'])
+        }
       }, (error) => {
         this.messageService.openCustomMessage(msgType.ERROR, error.error.error.message)
       })

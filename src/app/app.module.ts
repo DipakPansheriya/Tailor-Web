@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChangepasswordComponent } from './Pages/changepassword/changepassword.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegisterComponent } from './Pages/register/register.component';
 import { SharedModule } from './shared/shared.module';
@@ -17,6 +16,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ForgotpasswordComponent } from './Pages/forgotpassword/forgotpassword.component';
 import { environment } from 'src/environments/environment.prod';
+import { AdminMasterComponent } from './Pages/admin-master/admin-master.component';
 
 
 @NgModule({
@@ -24,8 +24,8 @@ import { environment } from 'src/environments/environment.prod';
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    ChangepasswordComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    AdminMasterComponent
   ],
   imports: [
     CommonModule,

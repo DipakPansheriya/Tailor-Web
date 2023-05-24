@@ -16,63 +16,14 @@ export class CustomersMasterComponent implements OnInit {
 
   first = 0;
   rows = 5;
-  isDialogvisible = false;
   customerId :any;
+  isEdit :boolean = false;
   customerForm : any =  FormGroup;
-  dialogHeader: string = 'Add New Customer';
+  // dialogHeader: string = 'Add New Customer';
   submitBtnLable = 'Submit';
   customersList: any = [];
   mobileValidPattern: RegExp = new RegExp(/^\d{0,10}$/g);
   validPatternName: RegExp = new RegExp(/^[a-zA-Z ]*$/g);
-
-
-  // customersList = [
-  //   {
-  //     firstName: "Manish",
-  //     lastName: "Kumar",
-  //     mobileNo : 9988775588,
-  //   },
-  //   {
-  //     firstName: "Deep",
-  //     lastName: "Patel",
-  //     mobileNo : 6655887744,
-  //   },
-  //   {
-  //     firstName: "Tirth",
-  //     lastName: "K",
-  //     mobileNo : 7894564565,
-  //   },
-  //   {
-  //     firstName: "Pradip",
-  //     lastName: "Patel",
-  //     mobileNo : 7418741579,
-  //   },
-  //   {
-  //     firstName: "Dummy",
-  //     lastName: "Manish",
-  //     mobileNo : 9876543210,
-  //   },
-  //   {
-  //     firstName: "Manish1",
-  //     lastName: "Kumar 1",
-  //     mobileNo : 9988775588,
-  //   },
-  //   {
-  //     firstName: "Deep1",
-  //     lastName: "Deep1 Patel1",
-  //     mobileNo : 6655887744,
-  //   },
-  //   {
-  //     firstName: "Tirth1",
-  //     lastName: "Kumar1",
-  //     mobileNo : 7894564565,
-  //   },
-  //   {
-  //     firstName: "Pradip1",
-  //     lastName: "Patel1",
-  //     mobileNo : 7418741579,
-  //   },
-  // ]
 
   constructor(
     private fb : FormBuilder,
@@ -134,9 +85,7 @@ export class CustomersMasterComponent implements OnInit {
 
 
   editCustomer(value: any): void{
-    this.isDialogvisible = true
-    this.dialogHeader = 'Edit Customer';
-    this.submitBtnLable = 'Update';
+    this.isEdit = true
     this.customerForm.controls.firstName.setValue(value.firstName);
     this.customerForm.controls.lastName.setValue(value.lastName);
     this.customerForm.controls.mobileNo.setValue(value.mobileNo);
@@ -145,7 +94,9 @@ export class CustomersMasterComponent implements OnInit {
   }
 
   addNewCutomer() {
-    this.isDialogvisible = true;
+    this.isEdit = false
+    this.customerId = ''
+    this.customerForm.reset()
   }
 
   onSubmit(): void {
@@ -164,7 +115,6 @@ export class CustomersMasterComponent implements OnInit {
         if (res) {
           this.messageService.openCustomMessage(msgType.SUCCESS, 'Customer Added successfuly!!');
           this.customerForm.reset();
-          this.isDialogvisible = false
         }
       })
       .catch(error => this.messageService.openCustomMessage(msgType.SUCCESS, error.error.error.message))
@@ -172,7 +122,6 @@ export class CustomersMasterComponent implements OnInit {
       this.fireBaseService.updateCustomerData(this.customerId, paylod).then((res) => {
           this.messageService.openCustomMessage(msgType.SUCCESS, 'Customer Updated successfuly!!');
           this.customerForm.reset();
-          this.isDialogvisible = false
       })
       .catch(error => this.messageService.openCustomMessage(msgType.SUCCESS, error.error.error.message))
     }

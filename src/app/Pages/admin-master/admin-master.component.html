@@ -1,0 +1,67 @@
+<div class="login">
+    <button routerLink="/login">Login</button>
+</div>
+<div class="row">
+    <p-table #customer_table [value]="userList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50]" [globalFilterFields]="['mobileNo']" dataKey="mobileNo">
+        <ng-template pTemplate="caption">
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>CompanyName</th>
+                <th>Email</th>
+                <th>ExpaeriDate</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-columns="columns">
+            <tr>
+                <td>{{item.companyName}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.endDate | date:"dd-MM-yyyy"}}</td>
+                <td>{{item.status}}</td>
+                <td>
+                    <div class="edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="editUserData(item)">
+                        <i class="pi pi-user-edit"></i>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">User Edit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="inputSwitch">
+                <div class="itemlabel">
+                    <label>Status</label>
+                </div>
+                <div class="toggle-off-on">
+                    <p-inputSwitch [(ngModel)]="editUserItem" (onChange)="recodeStausChange($event)"></p-inputSwitch>
+                </div>
+            </div>
+            <div class="inputSwitch">
+                <div class="itemlabel">
+                    <label>Expaeri Date</label>
+                </div>
+                <div class="toggle-off-on">
+                    <p-calendar [(ngModel)]="date" [showIcon]="true"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="submitUser()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>

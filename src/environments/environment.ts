@@ -1,36 +1,22 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
-// export const baseURL = "https://identitytoolkit.googleapis.com/v1/accounts:";
+export const baseURL = "https://identitytoolkit.googleapis.com/v1/accounts:";
 // export const APIKey = "key=AIzaSyDAtXwI6GLP7h2GSOyWXhyeekh4uqaVfjw";
   
 export const environment = {
   production: false,
   firebaseConfig : {
-    apiKey: "AIzaSyDAtXwI6GLP7h2GSOyWXhyeekh4uqaVfjw",
-    authDomain: "ionic-tailorapp.firebaseapp.com",
-    projectId: "ionic-tailorapp",
-    storageBucket: "ionic-tailorapp.appspot.com",
-    messagingSenderId: "1007527390320",
-    appId: "1:1007527390320:web:3a790ee3c22a618d8e58b5",
-    measurementId: "G-CTHM34YXMF"
+    apiKey: "AIzaSyB6kAk4DfAgPx3ufek1PNC9Z6k-4Z0Ef6A",
+    authDomain: "tailor-web.firebaseapp.com",
+    projectId: "tailor-web",
+    storageBucket: "tailor-web.appspot.com",
+    messagingSenderId: "172189684583",
+    appId: "1:172189684583:web:593b7abd1a43e03d8b95c2"
   },
 
 
   // // API URLs Started ========
-  // signIn: `${baseURL}signInWithPassword?${APIKey}`,
-  // signUp: `${baseURL}signUp?${APIKey}`,
-  // forgetPassword: `${baseURL}sendOobCode?${APIKey}`,
-  // changePassword: `${baseURL}update?${APIKey}`,
+  signIn: `${baseURL}signInWithPassword?key=`,
+  signUp: `${baseURL}signUp?key=`,
+  forgetPassword: `${baseURL}sendOobCode?key=`,
+  changePassword: `${baseURL}update?key=`,
 
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
